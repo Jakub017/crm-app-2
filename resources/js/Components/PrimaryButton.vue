@@ -1,14 +1,22 @@
 <script setup>
-defineProps({
-    type: {
-        type: String,
-        default: 'submit',
-    },
+import { Link } from "@inertiajs/vue3";
+const props = defineProps({
+    type: String,
+    href: String,
 });
 </script>
 
 <template>
-    <button :type="type" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 transition ease-in-out duration-150">
-        <slot />
+    <button
+        v-if="props.type === 'button'"
+        class="text-white text-sm font-semibold px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 transition duration-150 ease-in-out"
+    >
+        <slot></slot>
     </button>
+    <Link
+        v-if="props.type === 'Link'"
+        :href="href"
+        class="text-white text-sm font-semibold px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 transition duration-150 ease-in-out"
+        ><slot></slot
+    ></Link>
 </template>

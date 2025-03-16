@@ -5,3 +5,20 @@
 [x-cloak] {
     display: none;
 }
+
+* {
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+.form-input {
+    @apply block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm;
+}
+
+.form-label {
+    @apply block mb-1 text-sm font-medium text-gray-700;
+}
+
+.form-error {
+    @apply text-sm text-red-500;
+}
