@@ -3,6 +3,7 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ClientController;
 
 Route::get('/', function () {
@@ -27,12 +28,17 @@ Route::middleware([
 
 Route::middleware('auth:sanctum', config('jetstream.auth_session'), 'verified',)->group(function () {
     Route::controller(ClientController::class)->group(function() {
-        Route::get('/dashboard/klienci', 'index')->name('client.index');
-        Route::get('/dashboard/klienci/dodaj', 'create')->name('client.create');
-        Route::post('/dashboard/klienci', 'store')->name('client.store');
-        Route::get('/dashboard/klienci/{client}', 'show')->name('client.show');
-        Route::get('/dashboard/klienci/{client}/edytuj', 'edit')->name('client.edit');
-        Route::put('/dashboard/klienci/{client}', 'update')->name('client.update');
-        Route::delete('/dashboard/klienci/{client}', 'destroy')->name('client.destroy');
+        Route::get('/klienci', 'index')->name('client.index');
+        Route::get('/klienci/dodaj', 'create')->name('client.create');
+        Route::post('/klienci', 'store')->name('client.store');
+        Route::get('/klienci/{client}', 'show')->name('client.show');
+        Route::get('/klienci/{client}/edytuj', 'edit')->name('client.edit');
+        Route::put('/klienci/{client}', 'update')->name('client.update');
+        Route::delete('/klienci/{client}', 'destroy')->name('client.destroy');
+        Route::post('/klienci/szukaj', 'search')->name('client.search');
+    });
+
+    Route::controller(TaskController::class)->group(function() {
+        Route::get('/zadania', 'index')->name('task.index');
     });
 });

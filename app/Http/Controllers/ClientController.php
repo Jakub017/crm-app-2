@@ -20,6 +20,15 @@ class ClientController extends Controller
         ]);
     }
 
+    public function search(Request $request) {
+        $user = Auth::user();
+        $clients = Client::search($request->input('query'))->where('user_id', $user->id)->get();
+        $search = $request->input('search');
+        return Inertia('Clients/Index', [
+            'clients' => $clients,
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

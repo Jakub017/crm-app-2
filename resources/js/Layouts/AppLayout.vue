@@ -60,11 +60,23 @@ const logout = () => {
                 >
                     <i class="fa-solid fa-users"></i>Klienci
                 </SidebarLink>
-                <SidebarLink>
+                <SidebarLink
+                    :href="route('task.index')"
+                    :active="route().current('task.*')"
+                >
                     <i class="fa-solid fa-list-check"></i>Zadania
                 </SidebarLink>
                 <SidebarLink>
                     <i class="fa-solid fa-file-invoice"></i>Faktury
+                </SidebarLink>
+            </div>
+
+            <div class="flex flex-col gap-3 w-full mt-auto mb-0">
+                <SidebarLink>
+                    <i class="fa-solid fa-circle-info"></i>Pomoc
+                </SidebarLink>
+                <SidebarLink :href="route('logout')" method="POST">
+                    <i class="fa-solid fa-right-from-bracket"></i>Wyloguj się
                 </SidebarLink>
             </div>
         </div>

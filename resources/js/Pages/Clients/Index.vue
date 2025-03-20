@@ -13,7 +13,27 @@
             </template>
         </TopText>
     </div>
-    <div class="bg-white rounded-lg px-4">
+    <div
+        class="grid grid-cols-12 gap-4 bg-white rounded-lg px-4 mb-4 p-4 border-[1px] border-gray-200"
+    >
+        <form @submit.prevent="search" class="col-span-3 relative">
+            <button
+                class="text-gray-400 absolute left-2 top-1/2 -translate-y-1/2"
+                type="submit"
+            >
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+
+            <input
+                class="form-input pl-8"
+                type="text"
+                id="search"
+                placeholder="Szukaj..."
+                v-model="form.query"
+            />
+        </form>
+    </div>
+    <div class="bg-white rounded-lg px-4 border-[1px] border-gray-200">
         <div class="flow-root">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div
@@ -114,7 +134,10 @@
                                         <div class="flex items-center gap-2">
                                             <Link
                                                 :href="
-                                                    route('client.show', client)
+                                                    route(
+                                                        'client.show',
+                                                        client.id
+                                                    )
                                                 "
                                                 class="text-indigo-600"
                                                 ><i class="fa-solid fa-eye"></i
@@ -122,7 +145,10 @@
 
                                             <Link
                                                 :href="
-                                                    route('client.edit', client)
+                                                    route(
+                                                        'client.edit',
+                                                        client.id
+                                                    )
                                                 "
                                                 class="text-indigo-600"
                                                 ><i class="fa-solid fa-pen"></i
@@ -131,7 +157,7 @@
                                                 :href="
                                                     route(
                                                         'client.destroy',
-                                                        client
+                                                        client.id
                                                     )
                                                 "
                                                 method="DELETE"
@@ -155,10 +181,17 @@
 <script setup>
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TopText from "@/Components/TopText.vue";
-import { Link } from "@inertiajs/vue3";
+import { Link, useForm } from "@inertiajs/vue3";
+
 const props = defineProps({
     clients: Array,
 });
+
+const form = useForm({
+    query: "",
+});
+
+const search = () => form.post(route("client.search", { query: form.query }));
 </script>
 
 <script>
