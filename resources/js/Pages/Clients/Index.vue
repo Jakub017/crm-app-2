@@ -14,9 +14,12 @@
         </TopText>
     </div>
     <div
-        class="grid grid-cols-12 gap-4 bg-white rounded-lg px-4 mb-4 p-4 border-[1px] border-gray-200"
+        class="grid grid-cols-12 gap-4 bg-white rounded-lg px-4 mb-4 p-4 border-[1px] border-secondary-light"
     >
-        <form @submit.prevent="search" class="col-span-3 relative">
+        <form
+            @submit.prevent="search"
+            class="col-span-12 lg:col-span-3 relative"
+        >
             <button
                 class="text-gray-400 absolute left-2 top-1/2 -translate-y-1/2"
                 type="submit"
@@ -33,9 +36,9 @@
             />
         </form>
     </div>
-    <div class="bg-white rounded-lg px-4 border-[1px] border-gray-200">
+    <div class="bg-white rounded-lg px-4 border-[1px] border-secondary-ligh">
         <div class="flow-root">
-            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 pb-2">
                 <div
                     class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8"
                 >
@@ -51,55 +54,56 @@
                                     >
                                         <input
                                             type="checkbox"
-                                            class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                            class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
                                         />
                                     </th>
                                     <th
                                         scope="col"
-                                        class="min-w-[12rem] py-3.5 pr-3 text-left text-sm font-semibold text-gray-500"
+                                        class="min-w-[12rem] py-3.5 pr-3 text-left text-sm font-semibold text-secondary"
                                     >
                                         Firma
                                     </th>
                                     <th
                                         scope="col"
-                                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-500"
+                                        class="px-3 py-3.5 text-left text-sm font-semibold text-secondary"
                                     >
                                         Osoba kontaktowa
                                     </th>
                                     <th
                                         scope="col"
-                                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-500"
+                                        class="px-3 py-3.5 text-left text-sm font-semibold text-secondary"
                                     >
                                         Email
                                     </th>
                                     <th
                                         scope="col"
-                                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-500"
+                                        class="px-3 py-3.5 text-left text-sm font-semibold text-secondary"
                                     >
                                         Kraj
                                     </th>
                                     <th
                                         scope="col"
-                                        class="relative py-3.5 pl-3 pr-4 sm:pr-3"
+                                        class="px-3 py-3.5 text-left text-sm font-semibold text-secondary"
                                     >
-                                        <span class="sr-only">Edytuj</span>
+                                        Akcje
+                                        <span class="sr-only">Akcje</span>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
-                                <tr v-for="client in clients" :key="client.id">
+                                <tr
+                                    v-for="client in clients"
+                                    :key="client.id"
+                                    class="even:bg-gray-50"
+                                >
                                     <td class="relative px-7 sm:w-12 sm:px-6">
-                                        <!-- Selected row marker, only show when row is selected. -->
-                                        <!-- <div class="absolute inset-y-0 left-0 w-0.5 bg-indigo-600"></div> -->
-
                                         <input
                                             type="checkbox"
-                                            class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                            class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
                                         />
                                     </td>
-                                    <!-- Selected: "text-indigo-600", Not Selected: "text-gray-900" -->
                                     <td
-                                        class="whitespace-nowrap py-4 pr-3 text-sm font-semibold text-gray-900"
+                                        class="whitespace-nowrap py-4 pr-3 text-sm font-medium text-secondary-dark"
                                     >
                                         <p>{{ client.company }}</p>
                                         <span
@@ -108,12 +112,12 @@
                                         </span>
                                     </td>
                                     <td
-                                        class="whitespace-nowrap px-3 py-4 text-sm font-semibold text-gray-900"
+                                        class="whitespace-nowrap px-3 py-4 text-sm font-medium text-secondary-dark"
                                     >
                                         {{ client.person }}
                                     </td>
                                     <td
-                                        class="whitespace-nowrap px-3 py-4 text-sm font-semibold text-gray-900"
+                                        class="whitespace-nowrap px-3 py-4 text-sm font-medium text-secondary-dark"
                                     >
                                         <a
                                             class="hover:underline"
@@ -124,12 +128,12 @@
                                         >
                                     </td>
                                     <td
-                                        class="whitespace-nowrap px-3 py-4 text-sm font-semibold text-gray-900"
+                                        class="whitespace-nowrap px-3 py-4 text-sm font-medium text-secondary-dark"
                                     >
                                         {{ client.country }}
                                     </td>
                                     <td
-                                        class="whitespace-nowrap py-4 pl-3 pr-4 font-semibold text-right text-sm sm:pr-3"
+                                        class="whitespace-nowrap py-4 pl-3 pr-4 font-medium text-right text-sm sm:pr-3"
                                     >
                                         <div class="flex items-center gap-2">
                                             <Link
@@ -139,7 +143,7 @@
                                                         client.id
                                                     )
                                                 "
-                                                class="text-indigo-600"
+                                                class="text-primary duration-200 hover:text-indigo-700"
                                                 ><i class="fa-solid fa-eye"></i
                                             ></Link>
 
@@ -150,7 +154,7 @@
                                                         client.id
                                                     )
                                                 "
-                                                class="text-indigo-600"
+                                                class="text-primary duration-200 hover:text-indigo-700"
                                                 ><i class="fa-solid fa-pen"></i
                                             ></Link>
                                             <Link
@@ -161,7 +165,7 @@
                                                     )
                                                 "
                                                 method="DELETE"
-                                                class="text-red-600"
+                                                class="text-red-600 duration-200 hover:text-red-700"
                                                 ><i
                                                     class="fa-solid fa-trash"
                                                 ></i

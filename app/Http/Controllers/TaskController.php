@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -12,7 +14,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::latest()->get();
+        $user = Auth::user();
+        $tasks = $user->tasks()->with('client')->where('status', 0)->get();
         return Inertia('Tasks/Index', [
             'tasks' => $tasks,
         ]);
@@ -23,7 +26,11 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        $user = Auth::user();
+        $clients = $user->clients()->get();
+        return Inertia ('Tasks/Create', [
+            'clients' => $clients,
+        ]);
     }
 
     /**
@@ -31,7 +38,20 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        $data = $request->validate([
+            'name' => 'required|string',
+            'description' => 'string',
+            'client_id' => 'required',
+            'priority' => 'required|string',
+            'due_date' => 'required|date',
+        ]);
+
+        $data['status'] = 0;
+        $data['has_invoice'] = 0;
+
+        $user->tasks()->create($data);
+        return redirect()->route('task.index')->with('success', 'Zadanie zostało dodane.');
     }
 
     /**
@@ -56,6 +76,13 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         //
+    }
+
+    public function check(Request $request, Task $task) {
+        $task->update([
+            'status' => 1,
+        ]);
+        return redirect()->route('task.index')->with('success', 'Zadanie oznaczone jako wykonane.');
     }
 
     /**

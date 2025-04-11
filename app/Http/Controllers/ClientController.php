@@ -45,7 +45,7 @@ class ClientController extends Controller
         $user = Auth::user();
         $data = $request->validate([
             'company' => 'required|string',
-            'nip' => 'required|string|max:13|unique:clients', // Nip francuski ma 13 cyfr
+            'nip' => 'required|string|max:13',
             'type' => 'required|string',
             'country' => 'required|string',
             'street' => 'required|string',
@@ -89,7 +89,7 @@ class ClientController extends Controller
         $user = Auth::user();
         $data = $request->validate([
             'company' => 'required|string',
-            'nip' => 'required|string|max:13|unique:clients,nip'.$user->id, // Nip francuski ma 13 cyfr
+            'nip' => 'required|string|max:13', // Nip francuski ma 13 cyfr
             'type' => 'required|string',
             'country' => 'required|string',
             'street' => 'required|string',

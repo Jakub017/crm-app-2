@@ -40,5 +40,11 @@ Route::middleware('auth:sanctum', config('jetstream.auth_session'), 'verified',)
 
     Route::controller(TaskController::class)->group(function() {
         Route::get('/zadania', 'index')->name('task.index');
+        Route::get('/zadania/dodaj', 'create')->name('task.create');
+        Route::post('/zadania', 'store')->name('task.store');
+        Route::get('/zadania/{task}', 'show')->name('task.show');
+        Route::get('/zadania/{task}/edytuj', 'edit')->name('task.edit');
+        Route::put('/zadania/{task}', 'update')->name('task.update');
+        Route::put('/zadania/{task}', 'check')->name('task.check');
     });
 });

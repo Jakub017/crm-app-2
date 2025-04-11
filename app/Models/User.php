@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Task;
 use App\Models\Client;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
@@ -68,5 +69,9 @@ class User extends Authenticatable
 
     public function clients() {
         return $this->hasMany(Client::class);
+    }
+    
+    public function tasks() {
+        return $this->hasMany(Task::class);
     }
 }

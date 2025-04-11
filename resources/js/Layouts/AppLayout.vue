@@ -42,41 +42,59 @@ const logout = () => {
     <div class="flex w-full max-w-full h-screen overflow-hidden">
         <!-- Sidebar -->
         <div
-            class="flex flex-col justify-start items-center gap-8 p-4 bg-white border-r-[1px] border-gray-200 w-24 lg:w-[250px]"
+            class="flex flex-col justify-center items-center gap-8 p-4 bg-white w-24 lg:w-[250px] border-r-[1px] border-secondary-light"
         >
             <Link :href="route('dashboard')">
                 <ApplicationMark class="block size-12" />
             </Link>
-            <div class="flex flex-col gap-3 w-full">
+            <div
+                class="flex flex-col justify-center items-center gap-3 w-full lg:items-center"
+            >
                 <SidebarLink
                     :href="route('dashboard')"
                     :active="route().current('dashboard')"
                 >
-                    <i class="fa-solid fa-house"></i>Pulpit
+                    <i class="fa-solid fa-house text-base"></i
+                    ><span class="hidden lg:block">Pulpit</span>
                 </SidebarLink>
                 <SidebarLink
                     :href="route('client.index')"
                     :active="route().current('client.*')"
                 >
-                    <i class="fa-solid fa-users"></i>Klienci
+                    <i class="fa-solid fa-users text-base"></i
+                    ><span class="hidden lg:block">Klienci</span>
                 </SidebarLink>
                 <SidebarLink
                     :href="route('task.index')"
                     :active="route().current('task.*')"
                 >
-                    <i class="fa-solid fa-list-check"></i>Zadania
+                    <i class="fa-solid fa-list-check text-base"></i
+                    ><span class="hidden lg:block">Zadania</span>
                 </SidebarLink>
                 <SidebarLink>
-                    <i class="fa-solid fa-file-invoice"></i>Faktury
+                    <i class="fa-solid fa-file-invoice text-base"></i
+                    ><span class="hidden lg:block">Faktury</span>
+                </SidebarLink>
+                <SidebarLink>
+                    <i class="fa-solid fa-gear text-base"></i
+                    ><span class="hidden lg:block">Ustawienia</span>
                 </SidebarLink>
             </div>
 
-            <div class="flex flex-col gap-3 w-full mt-auto mb-0">
+            <div
+                class="flex flex-col justify-center items-center gap-3 w-full mt-auto mb-0"
+            >
                 <SidebarLink>
-                    <i class="fa-solid fa-circle-info"></i>Pomoc
+                    <i class="fa-solid fa-circle-info text-base"></i
+                    ><span class="hidden lg:block">Pomoc</span>
                 </SidebarLink>
-                <SidebarLink :href="route('logout')" method="POST">
-                    <i class="fa-solid fa-right-from-bracket"></i>Wyloguj się
+                <SidebarLink
+                    :href="route('logout')"
+                    :type="'logout'"
+                    method="POST"
+                >
+                    <i class="fa-solid fa-right-from-bracket text-base"></i
+                    ><span class="hidden lg:block">Wyloguj się</span>
                 </SidebarLink>
             </div>
         </div>
@@ -87,12 +105,26 @@ const logout = () => {
         >
             <!-- Nav -->
             <nav
-                class="flex p-4 h-20 bg-white border-b-[1px] border-gray-200 w-full"
+                class="py-2 px-4 bg-white w-full border-b-[1px] border-secondary-light"
             >
-                {{ user.name }}
-                <img :src="user.profile_photo_url" alt="" />
+                <div class="flex justify-end items-center">
+                    <button
+                        class="flex justify-end items-center gap-3 p-2 rounded-md hover:bg-secondary-extra-light transition duration-200 ease-in-out"
+                    >
+                        <span
+                            class="text-sm text-secondary-dark font-semibold"
+                            >{{ user.name }}</span
+                        >
+                        <img
+                            :src="user.profile_photo_url"
+                            class="size-8 rounded-md"
+                        />
+                    </button>
+                </div>
             </nav>
-            <main class="p-6 bg-gray-50 w-full h-full overflow-y-auto">
+            <main
+                class="p-6 bg-secondary-extra-light w-full h-full overflow-y-auto"
+            >
                 <slot></slot>
             </main>
         </div>

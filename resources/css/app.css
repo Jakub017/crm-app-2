@@ -8,11 +8,10 @@
 
 * {
     box-sizing: border-box;
-    font-family: "Inter", sans-serif;
 }
 
 .form-input {
-    @apply block w-full rounded-md border-[1px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 text-sm;
+    @apply block w-full rounded-md border-[1px] border-secondary-light focus:border-primary focus:ring-primary text-sm;
 }
 
 .form-label {

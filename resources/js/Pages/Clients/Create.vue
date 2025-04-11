@@ -13,7 +13,7 @@
                         Dane firmy
                     </h3>
                 </div>
-                <div class="col-span-4">
+                <div class="col-span-12 md:col-span-4">
                     <label for="company" class="form-label">Nazwa firmy</label>
                     <input
                         id="company"
@@ -25,7 +25,7 @@
                         form.errors.company
                     }}</span>
                 </div>
-                <div class="col-span-4">
+                <div class="col-span-12 md:col-span-4">
                     <label for="nip" class="form-label">NIP</label>
                     <input
                         id="nip"
@@ -37,10 +37,8 @@
                         form.errors.nip
                     }}</span>
                 </div>
-                <div class="col-span-4">
-                    <label for="type" class="form-label"
-                        >Rodzaj działalności</label
-                    >
+                <div class="col-span-12 md:col-span-4">
+                    <label for="type" class="form-label">Forma prawna</label>
                     <input
                         id="type"
                         class="form-input"
@@ -52,7 +50,7 @@
                     }}</span>
                 </div>
 
-                <div class="col-span-3">
+                <div class="col-span-12 md:col-span-6 lg:col-span-3">
                     <label for="country" class="form-label">Kraj</label>
                     <input
                         id="country"
@@ -64,7 +62,7 @@
                         form.errors.country
                     }}</span>
                 </div>
-                <div class="col-span-3">
+                <div class="col-span-12 md:col-span-6 lg:col-span-3">
                     <label for="street" class="form-label">Ulica</label>
                     <input
                         id="street"
@@ -76,7 +74,7 @@
                         form.errors.street
                     }}</span>
                 </div>
-                <div class="col-span-3">
+                <div class="col-span-12 md:col-span-6 lg:col-span-3">
                     <label for="city" class="form-label">Miasto</label>
                     <input
                         id="city"
@@ -88,7 +86,7 @@
                         form.errors.city
                     }}</span>
                 </div>
-                <div class="col-span-3">
+                <div class="col-span-12 md:col-span-6 lg:col-span-3">
                     <label for="zip_code" class="form-label"
                         >Kod pocztowy</label
                     >
@@ -108,7 +106,7 @@
                         Dane kontaktowe
                     </h3>
                 </div>
-                <div class="col-span-4">
+                <div class="col-span-12 md:col-span-4">
                     <label for="person" class="form-label"
                         >Osoba kontaktowa</label
                     >
@@ -122,7 +120,7 @@
                         form.errors.person
                     }}</span>
                 </div>
-                <div class="col-span-4">
+                <div class="col-span-12 md:col-span-4">
                     <label for="email" class="form-label">Adres email</label>
                     <input
                         id="email"
@@ -134,7 +132,7 @@
                         form.errors.email
                     }}</span>
                 </div>
-                <div class="col-span-4">
+                <div class="col-span-12 md:col-span-4">
                     <label for="phone" class="form-label">Numer telefonu</label>
                     <input
                         id="phone"

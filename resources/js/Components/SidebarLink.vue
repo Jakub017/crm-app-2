@@ -4,15 +4,19 @@ import { Link } from "@inertiajs/vue3";
 const props = defineProps({
     href: String,
     active: String,
+    type: String,
 });
 </script>
 
 <template>
     <Link
         :href="href"
-        class="w-full py-2 px-4 rounded-lg flex items-center justify-start gap-3 font-medium text-gray-500 hover:bg-indigo-50 hover:text-indigo-700 transition duration-150 ease-in-out text-base"
+        class="w-12 h-12 rounded-full flex items-center justify-center font-medium hover:bg-primary-light transition duration-200 ease-in-out text-lg lg:text-sm lg:justify-start lg:w-full lg:h-auto lg:p-3 lg:gap-2 lg:rounded-md"
         :class="{
-            'bg-indigo-50 text-indigo-700': props.active,
+            'text-primary bg-primary-light font-semibold': props.active,
+            'text-secondary': !props.active,
+            'bg-secondary font-semibold text-white hover:bg-secondary hover:text-white':
+                props.type === 'logout',
         }"
     >
         <slot></slot>

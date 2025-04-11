@@ -6,14 +6,14 @@
                 Lista twoich zadań do wykonania.
             </template>
             <template v-slot:action>
-                <PrimaryButton :type="'Link'" :href="route('client.create')"
-                    >Dodaj klienta</PrimaryButton
+                <PrimaryButton :type="'Link'" :href="route('task.create')"
+                    >Dodaj zadanie</PrimaryButton
                 >
             </template>
         </TopText>
     </div>
     <div
-        class="grid grid-cols-12 gap-4 bg-white rounded-lg px-4 mb-4 p-4 border-[1px] border-gray-200"
+        class="grid grid-cols-12 gap-4 bg-white rounded-lg px-4 mb-4 p-4 border-[1px] border-secondary-light"
     >
         <form @submit.prevent="search" class="col-span-3 relative">
             <button
@@ -32,32 +32,34 @@
             />
         </form>
     </div>
-    <div class="bg-white rounded-lg px-4 border-[1px] border-gray-200">
+    <div
+        class="bg-white rounded-lg px-4 border-[1px] border-secondary-light pb-2"
+    >
         <div class="">
             <table class="min-w-full divide-y divide-gray-300">
                 <thead>
                     <tr>
                         <th
                             scope="col"
-                            class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-500 sm:pl-0"
+                            class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-secondary sm:pl-4"
                         >
                             Nazwa
                         </th>
                         <th
                             scope="col"
-                            class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-500 lg:table-cell"
+                            class="hidden px-3 py-3.5 text-left text-sm font-semibold text-secondary lg:table-cell"
                         >
                             Data wykonania
                         </th>
                         <th
                             scope="col"
-                            class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-500 sm:table-cell"
+                            class="hidden px-3 py-3.5 text-left text-sm font-semibold text-secondary sm:table-cell"
                         >
                             Klient
                         </th>
                         <th
                             scope="col"
-                            class="px-3 py-3.5 text-left text-sm font-semibold text-gray-500"
+                            class="px-3 py-3.5 text-left text-sm font-semibold text-secondary"
                         >
                             Priorytet
                         </th>
@@ -70,159 +72,72 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
-                    <tr>
+                    <tr
+                        v-for="task in tasks"
+                        :key="task.id"
+                        class="even:bg-gray-50"
+                    >
                         <td
-                            class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-semibold text-gray-900 sm:w-auto sm:max-w-none sm:pl-0"
+                            class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-secondary-dark sm:w-auto sm:max-w-none sm:pl-4"
                         >
-                            Zmiany na stronie
+                            {{ task.name }}
                             <dl class="font-normal lg:hidden">
                                 <dt class="sr-only">Title</dt>
-                                <dd class="mt-1 truncate text-gray-900">
-                                    20.03.2025
+                                <dd class="mt-1 truncate text-secondary-dark">
+                                    {{ formatDate(task.due_date) }}
                                 </dd>
                                 <dt class="sr-only sm:hidden">Email</dt>
                                 <dd
-                                    class="mt-1 truncate font-semibold text-gray-900 sm:hidden"
-                                >
-                                    Igum
-                                </dd>
+                                    class="mt-1 truncate font-medium text-secondary-dark sm:hidden"
+                                ></dd>
                             </dl>
                         </td>
                         <td
-                            class="hidden px-3 py-4 text-sm font-semibold text-gray-900 lg:table-cell"
+                            class="hidden px-3 py-4 text-sm font-medium text-secondary-dark lg:table-cell"
                         >
-                            20.03.2025
+                            {{ formatDate(task.due_date) }}
                         </td>
                         <td
-                            class="hidden px-3 py-4 text-sm font-semibold text-gray-900 sm:table-cell"
+                            class="hidden px-3 py-4 text-sm font-medium text-secondary-dark sm:table-cell"
                         >
-                            Igum
+                            {{ task.client.company }}
                         </td>
                         <td
-                            class="px-3 py-4 text-sm font-semibold text-gray-900"
+                            class="px-3 py-4 text-sm font-medium text-secondary-dark"
                         >
                             <div
-                                class="bg-red-200 text-red-600 w-fit py-1 px-2 rounded-md"
-                            >
-                                Wysoki
-                            </div>
-                        </td>
-                        <td
-                            class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0"
-                        >
-                            <a
-                                href="#"
-                                class="text-indigo-600 hover:text-indigo-900"
-                                >Edit<span class="sr-only"
-                                    >, Lindsay Walton</span
-                                ></a
-                            >
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td
-                            class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-semibold text-gray-900 sm:w-auto sm:max-w-none sm:pl-0"
-                        >
-                            Wyczyszczenie serwera
-                            <dl class="font-normal lg:hidden">
-                                <dt class="sr-only">Title</dt>
-                                <dd class="mt-1 truncate text-gray-900">
-                                    21.03.2025
-                                </dd>
-                                <dt class="sr-only sm:hidden">Email</dt>
-                                <dd
-                                    class="mt-1 truncate font-semibold text-gray-900 sm:hidden"
-                                >
-                                    Olza
-                                </dd>
-                            </dl>
-                        </td>
-                        <td
-                            class="hidden px-3 py-4 text-sm font-semibold text-gray-900 lg:table-cell"
-                        >
-                            21.03.2025
-                        </td>
-                        <td
-                            class="hidden px-3 py-4 text-sm font-semibold text-gray-900 sm:table-cell"
-                        >
-                            Olza
-                        </td>
-                        <td
-                            class="px-3 py-4 text-sm font-semibold text-gray-900"
-                        >
-                            <div
-                                class="bg-blue-200 text-blue-600 w-fit py-1 px-2 rounded-md"
+                                v-if="task.priority === 1"
+                                class="bg-blue-200 text-blue-600 w-20 text-center py-1 px-2 rounded-md"
                             >
                                 Niski
                             </div>
-                        </td>
-                        <td
-                            class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0"
-                        >
-                            <a
-                                href="#"
-                                class="text-indigo-600 hover:text-indigo-900"
-                                >Edit<span class="sr-only"
-                                    >, Lindsay Walton</span
-                                ></a
-                            >
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td
-                            class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-semibold text-gray-900 sm:w-auto sm:max-w-none sm:pl-0"
-                        >
-                            Naprawa skrzynki mailowej
-                            <dl class="font-normal lg:hidden">
-                                <dt class="sr-only">Title</dt>
-                                <dd class="mt-1 truncate text-gray-900">
-                                    20.03.2025
-                                </dd>
-                                <dt class="sr-only sm:hidden">Email</dt>
-                                <dd
-                                    class="mt-1 truncate font-semibold text-gray-900 sm:hidden"
-                                >
-                                    Digitalowa
-                                </dd>
-                            </dl>
-                        </td>
-                        <td
-                            class="hidden px-3 py-4 text-sm font-semibold text-gray-900 lg:table-cell"
-                        >
-                            24.03.2025
-                        </td>
-                        <td
-                            class="hidden px-3 py-4 text-sm font-semibold text-gray-900 sm:table-cell"
-                        >
-                            Digitalowa
-                        </td>
-                        <td
-                            class="px-3 py-4 text-sm font-semibold text-gray-900"
-                        >
                             <div
-                                class="bg-orange-200 text-orange-600 w-fit py-1 px-2 rounded-md"
+                                v-else-if="task.priority === 2"
+                                class="bg-orange-200 text-orange-600 w-20 text-center py-1 px-2 rounded-md"
                             >
                                 Średni
+                            </div>
+                            <div
+                                v-else
+                                class="bg-red-200 text-red-600 w-20 text-center py-1 px-2 rounded-md"
+                            >
+                                Wyoski
                             </div>
                         </td>
                         <td
                             class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0"
                         >
-                            <div class="flex justify-end items-center gap-2">
+                            <div class="flex items-center gap-2">
                                 <Link
-                                    class="text-indigo-600 hover:text-indigo-700"
-                                    ><i
-                                        class="fa-solid fa-circle-check text-base"
-                                    ></i
+                                    :href="route('task.check', task.id)"
+                                    method="PUT"
+                                    class="text-primary duration-200 hover:primary-dark"
+                                    ><i class="fa-solid fa-circle-check"></i
                                 ></Link>
                                 <Link
-                                    class="text-indigo-600 hover:text-indigo-700"
-                                    ><i class="fa-solid fa-pen text-base"></i
-                                ></Link>
-                                <Link class="text-red-600 hover:text-red-700"
-                                    ><i class="fa-solid fa-trash text-base"></i
+                                    :href="route('task.edit', task.id)"
+                                    class="text-primary duration-200 hover:primary-dark"
+                                    ><i class="fa-solid fa-pen"></i
                                 ></Link>
                             </div>
                         </td>
@@ -237,6 +152,7 @@
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TopText from "@/Components/TopText.vue";
 import { Link, useForm } from "@inertiajs/vue3";
+import { format } from "date-fns";
 
 const props = defineProps({
     tasks: Array,
@@ -245,6 +161,10 @@ const props = defineProps({
 const form = useForm({
     query: "",
 });
+
+function formatDate(date) {
+    return format(date, "dd.MM.yyyy");
+}
 
 const search = () => form.post(route("task.search", { query: form.query }));
 </script>

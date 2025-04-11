@@ -15,10 +15,16 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ["Figtree", ...defaultTheme.fontFamily.sans],
+                sans: ["Poppins", ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                primary: "#665ef2",
+                primary: "#0C7FDA",
+                "primary-dark": "#0967B3",
+                "primary-light": "#E9F5FE",
+                secondary: "#5D7285",
+                "secondary-dark": "#3A4956",
+                "secondary-light": "#E2E7EB",
+                "secondary-extra-light": "#F5F7F9",
             },
         },
     },
