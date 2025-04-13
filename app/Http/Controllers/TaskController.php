@@ -21,6 +21,19 @@ class TaskController extends Controller
         ]);
     }
 
+     public function search(Request $request) {
+        $user = Auth::user();
+        if(!empty($request->query)) {
+             $tasks = Task::search($request->input('query'))->where('user_id', $user->id)->where('status', $request->status)->get();
+        } else {
+            $tasks = Task::where('user_id', $user->id)->where('status', $request->status)->get();
+        }
+       
+        return Inertia('Tasks/Index', [
+            'tasks' => $tasks,
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -90,6 +103,7 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+        return redirect()->route('task.index')->with('success', 'Zadanie zostało usunięte.');
     }
 }

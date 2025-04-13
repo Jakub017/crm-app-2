@@ -1,14 +1,13 @@
 <template>
     <div class="sm:flex sm:items-center">
         <TopText>
-            <template v-slot:title> Klienci </template>
+            <template v-slot:title> Faktury </template>
             <template v-slot:description>
-                Lista wszystkich klientów wraz z ich imieniem i nazwiskiem,
-                firmą i adresem email.
+                Lista wszystkich faktur wystawionych za wykonane zadania.
             </template>
             <template v-slot:action>
-                <PrimaryButton :type="'Link'" :href="route('client.create')"
-                    >Dodaj klienta</PrimaryButton
+                <PrimaryButton :type="'Link'" :href="route('invoice.create')"
+                    >Wystaw fakturę</PrimaryButton
                 >
             </template>
         </TopText>
@@ -16,7 +15,7 @@
     <div
         class="grid grid-cols-12 gap-4 bg-white rounded-lg px-4 mb-4 p-4 border-[1px] border-secondary-light"
     >
-        <form
+        <!-- <form
             @submit.prevent="search"
             class="col-span-12 lg:col-span-3 relative"
         >
@@ -34,7 +33,7 @@
                 placeholder="Szukaj..."
                 v-model="form.query"
             />
-        </form>
+        </form> -->
     </div>
     <div class="bg-white rounded-lg px-4 border-[1px] border-secondary-ligh">
         <div class="flow-root">
@@ -50,25 +49,25 @@
                                         scope="col"
                                         class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-secondary sm:pl-4"
                                     >
+                                        Numer ref.
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        class="hidden px-3 py-3.5 text-left text-sm font-semibold text-secondary md:table-cell"
+                                    >
                                         Firma
                                     </th>
                                     <th
                                         scope="col"
                                         class="hidden px-3 py-3.5 text-left text-sm font-semibold text-secondary md:table-cell"
                                     >
-                                        Osoba kontaktowa
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        class="hidden px-3 py-3.5 text-left text-sm font-semibold text-secondary md:table-cell"
-                                    >
-                                        Adres email
+                                        Kwota
                                     </th>
                                     <th
                                         scope="col"
                                         class="hidden px-3 py-3.5 text-left text-sm font-semibold text-secondary lg:table-cell"
                                     >
-                                        Kraj
+                                        Status
                                     </th>
                                     <th
                                         scope="col"
@@ -81,8 +80,8 @@
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
                                 <tr
-                                    v-for="client in clients"
-                                    :key="client.id"
+                                    v-for="invoice in invoices"
+                                    :key="invoice.id"
                                     class="even:bg-gray-50"
                                 >
                                     <td
@@ -209,16 +208,6 @@
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TopText from "@/Components/TopText.vue";
 import { Link, useForm } from "@inertiajs/vue3";
-
-const props = defineProps({
-    clients: Array,
-});
-
-const form = useForm({
-    query: "",
-});
-
-const search = () => form.post(route("client.search", { query: form.query }));
 </script>
 
 <script>

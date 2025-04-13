@@ -74,4 +74,8 @@ class User extends Authenticatable
     public function tasks() {
         return $this->hasMany(Task::class);
     }
+
+    public function invoices() {
+        return $this->hasMany(Invoice::class);
+    }
 }

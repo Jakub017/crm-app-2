@@ -13,9 +13,9 @@
         </TopText>
     </div>
     <div
-        class="grid grid-cols-12 gap-4 bg-white rounded-lg px-4 mb-4 p-4 border-[1px] border-secondary-light"
+        class="flex flex-col md:flex-row justify-between items-center bg-white rounded-lg px-4 mb-4 p-4 border-[1px] border-secondary-light"
     >
-        <form @submit.prevent="search" class="col-span-3 relative">
+        <form @submit.prevent="search" class="w-full md:w-1/4 relative">
             <button
                 class="text-gray-400 absolute left-2 top-1/2 -translate-y-1/2"
                 type="submit"
@@ -31,6 +31,38 @@
                 v-model="form.query"
             />
         </form>
+        <div
+            class="w-full md:w-1/2 ml-auto mr-0 flex flex-col md:flex-row justify-end items-center gap-2"
+        >
+            <button
+                @click="
+                    form.status = 0;
+                    search();
+                "
+                class="text-sm font-semibold px-4 py-2 rounded-md"
+                :class="
+                    form.status === 0
+                        ? 'text-primary bg-primary-light'
+                        : 'text-secondary'
+                "
+            >
+                Do zrobienia
+            </button>
+            <button
+                @click="
+                    form.status = 1;
+                    search();
+                "
+                class="text-sm font-semibold px-4 py-2 rounded-md"
+                :class="
+                    form.status === 1
+                        ? 'text-primary bg-primary-light'
+                        : 'text-secondary'
+                "
+            >
+                Wykonane
+            </button>
+        </div>
     </div>
     <div
         class="bg-white rounded-lg px-4 border-[1px] border-secondary-light pb-2"
@@ -43,31 +75,32 @@
                             scope="col"
                             class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-secondary sm:pl-4"
                         >
-                            Nazwa
+                            Zadanie
                         </th>
                         <th
                             scope="col"
-                            class="hidden px-3 py-3.5 text-left text-sm font-semibold text-secondary lg:table-cell"
+                            class="hidden px-3 py-3.5 text-left text-sm font-semibold text-secondary md:table-cell"
                         >
                             Data wykonania
                         </th>
                         <th
                             scope="col"
-                            class="hidden px-3 py-3.5 text-left text-sm font-semibold text-secondary sm:table-cell"
+                            class="hidden px-3 py-3.5 text-left text-sm font-semibold text-secondary md:table-cell"
                         >
                             Klient
                         </th>
                         <th
                             scope="col"
-                            class="px-3 py-3.5 text-left text-sm font-semibold text-secondary"
+                            class="hidden px-3 py-3.5 text-left text-sm font-semibold text-secondary sm:table-cell"
                         >
                             Priorytet
                         </th>
                         <th
                             scope="col"
-                            class="relative py-3.5 pl-3 pr-4 sm:pr-0"
+                            class="relative py-3.5 pl-3 pr-4 sm:pr-0 text-sm font-semibold text-secondary"
                         >
-                            <span class="sr-only">Edit</span>
+                            Akcje
+                            <span class="sr-only">Akcje</span>
                         </th>
                     </tr>
                 </thead>
@@ -80,30 +113,64 @@
                         <td
                             class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-secondary-dark sm:w-auto sm:max-w-none sm:pl-4"
                         >
-                            {{ task.name }}
-                            <dl class="font-normal lg:hidden">
-                                <dt class="sr-only">Title</dt>
-                                <dd class="mt-1 truncate text-secondary-dark">
-                                    {{ formatDate(task.due_date) }}
-                                </dd>
-                                <dt class="sr-only sm:hidden">Email</dt>
-                                <dd
-                                    class="mt-1 truncate font-medium text-secondary-dark sm:hidden"
-                                ></dd>
-                            </dl>
+                            <div class="flex flex-col gap-3">
+                                {{ task.name }}
+                                <div class="flex flex-col gap-1 md:hidden">
+                                    <span class="text-xs text-secondary"
+                                        >Data wykonania</span
+                                    >
+                                    <span
+                                        class="text-sm font-medium text-secondary-dark md:hidden"
+                                        >{{ formatDate(task.due_date) }}</span
+                                    >
+                                </div>
+
+                                <div class="flex flex-col gap-1 md:hidden">
+                                    <span class="text-xs text-secondary"
+                                        >Klient</span
+                                    >
+                                    <span
+                                        class="text-sm font-medium text-secondary-dark md:hidden"
+                                        >{{ task.client.company }}</span
+                                    >
+                                </div>
+                                <div class="flex flex-col gap-1 sm:hidden">
+                                    <span class="text-xs text-secondary"
+                                        >Priorytet</span
+                                    >
+                                    <div
+                                        v-if="task.priority === 1"
+                                        class="bg-blue-200 text-blue-600 w-20 text-center py-1 px-2 rounded-md"
+                                    >
+                                        Niski
+                                    </div>
+                                    <div
+                                        v-else-if="task.priority === 2"
+                                        class="bg-orange-200 text-orange-600 w-20 text-center py-1 px-2 rounded-md"
+                                    >
+                                        Średni
+                                    </div>
+                                    <div
+                                        v-else
+                                        class="bg-red-200 text-red-600 w-20 text-center py-1 px-2 rounded-md"
+                                    >
+                                        Wyoski
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                         <td
-                            class="hidden px-3 py-4 text-sm font-medium text-secondary-dark lg:table-cell"
+                            class="hidden px-3 py-4 text-sm font-medium text-secondary-dark md:table-cell"
                         >
                             {{ formatDate(task.due_date) }}
                         </td>
                         <td
-                            class="hidden px-3 py-4 text-sm font-medium text-secondary-dark sm:table-cell"
+                            class="hidden px-3 py-4 text-sm font-medium text-secondary-dark md:table-cell"
                         >
                             {{ task.client.company }}
                         </td>
                         <td
-                            class="px-3 py-4 text-sm font-medium text-secondary-dark"
+                            class="hidden px-3 py-4 text-sm font-medium text-secondary-dark sm:table-cell"
                         >
                             <div
                                 v-if="task.priority === 1"
@@ -127,17 +194,29 @@
                         <td
                             class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0"
                         >
-                            <div class="flex items-center gap-2">
+                            <div class="flex justify-center items-center gap-2">
                                 <Link
                                     :href="route('task.check', task.id)"
                                     method="PUT"
-                                    class="text-primary duration-200 hover:primary-dark"
-                                    ><i class="fa-solid fa-circle-check"></i
+                                    class="text-green-600 duration-200 hover:text-green-700"
+                                    ><i
+                                        class="fa-solid fa-circle-check text-lg md:text-base"
+                                    ></i
                                 ></Link>
                                 <Link
                                     :href="route('task.edit', task.id)"
                                     class="text-primary duration-200 hover:primary-dark"
-                                    ><i class="fa-solid fa-pen"></i
+                                    ><i
+                                        class="fa-solid fa-pen text-lg md:text-base"
+                                    ></i
+                                ></Link>
+                                <Link
+                                    :href="route('task.destroy', task.id)"
+                                    method="DELETE"
+                                    class="text-red-500 duration-200 hover:text-red-600"
+                                    ><i
+                                        class="fa-solid fa-trash text-lg md:text-base"
+                                    ></i
                                 ></Link>
                             </div>
                         </td>
@@ -160,13 +239,15 @@ const props = defineProps({
 
 const form = useForm({
     query: "",
+    status: 0,
 });
 
 function formatDate(date) {
     return format(date, "dd.MM.yyyy");
 }
 
-const search = () => form.post(route("task.search", { query: form.query }));
+const search = () =>
+    form.post(route("task.search", { query: form.query, status: form.status }));
 </script>
 
 <script>

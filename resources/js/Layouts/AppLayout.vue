@@ -42,7 +42,7 @@ const logout = () => {
     <div class="flex w-full max-w-full h-screen overflow-hidden">
         <!-- Sidebar -->
         <div
-            class="flex flex-col justify-center items-center gap-8 p-4 bg-white w-24 lg:w-[250px] border-r-[1px] border-secondary-light"
+            class="flex flex-col justify-center items-center gap-8 p-4 bg-white w-24 lg:w-[250px]"
         >
             <Link :href="route('dashboard')">
                 <ApplicationMark class="block size-12" />
@@ -71,7 +71,10 @@ const logout = () => {
                     <i class="fa-solid fa-list-check text-base"></i
                     ><span class="hidden lg:block">Zadania</span>
                 </SidebarLink>
-                <SidebarLink>
+                <SidebarLink
+                    :href="route('invoice.index')"
+                    :active="route().current('invoice.*')"
+                >
                     <i class="fa-solid fa-file-invoice text-base"></i
                     ><span class="hidden lg:block">Faktury</span>
                 </SidebarLink>
@@ -104,9 +107,7 @@ const logout = () => {
             class="flex min-h-full flex-col w-[calc(100%-64px)] lg:w-[calc(100%-250px)]"
         >
             <!-- Nav -->
-            <nav
-                class="py-2 px-4 bg-white w-full border-b-[1px] border-secondary-light"
-            >
+            <nav class="py-2 px-4 bg-white w-full">
                 <div class="flex justify-end items-center">
                     <button
                         class="flex justify-end items-center gap-3 p-2 rounded-md hover:bg-secondary-extra-light transition duration-200 ease-in-out"
@@ -123,7 +124,7 @@ const logout = () => {
                 </div>
             </nav>
             <main
-                class="p-6 bg-secondary-extra-light w-full h-full overflow-y-auto"
+                class="p-6 bg-[#F6F6F6] w-full h-full overflow-y-auto rounded-ss-xl"
             >
                 <slot></slot>
             </main>
