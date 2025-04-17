@@ -24,9 +24,10 @@ class TaskController extends Controller
      public function search(Request $request) {
         $user = Auth::user();
         if(!empty($request->query)) {
-             $tasks = Task::search($request->input('query'))->where('user_id', $user->id)->where('status', $request->status)->get();
+             $ids = Task::search($request->input('query'))->get()->pluck('id');
+             $tasks = Task::whereIn('id', $ids)->where('user_id', $user->id)->where('status', $request->status)->with('client')->get();
         } else {
-            $tasks = Task::where('user_id', $user->id)->where('status', $request->status)->get();
+            $tasks = Task::where('user_id', $user->id)->where('status', $request->status)->with('client')->get();
         }
        
         return Inertia('Tasks/Index', [
@@ -95,7 +96,14 @@ class TaskController extends Controller
         $task->update([
             'status' => 1,
         ]);
-        return redirect()->route('task.index')->with('success', 'Zadanie oznaczone jako wykonane.');
+        return redirect()->back()->with('success', 'Zadanie oznaczone jako "Wykonane".');
+    }
+
+    public function uncheck(Request $request, Task $task) {
+        $task->update([
+            'status' => 0,
+        ]);
+        return redirect()->back()->with('success', 'Zadanie oznaczone jako "Do wykonania".');
     }
 
     /**

@@ -14,7 +14,7 @@ class ClientController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $clients = $user->clients()->get();
+       
         return Inertia('Clients/Index', [
             'clients' => $clients,
         ]);

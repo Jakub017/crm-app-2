@@ -196,6 +196,7 @@
                         >
                             <div class="flex justify-center items-center gap-2">
                                 <Link
+                                    v-if="task.status === 0"
                                     :href="route('task.check', task.id)"
                                     method="PUT"
                                     class="text-green-600 duration-200 hover:text-green-700"
@@ -204,6 +205,17 @@
                                     ></i
                                 ></Link>
                                 <Link
+                                    v-if="task.status === 1"
+                                    :href="route('task.uncheck', task.id)"
+                                    method="PATCH"
+                                    class="text-orange-600 duration-200 hover:text-orange-700"
+                                    ><i
+                                        class="fa-solid fa-circle-check text-lg md:text-base"
+                                    ></i
+                                ></Link>
+
+                                <Link
+                                    v-if="task.status === 0"
                                     :href="route('task.edit', task.id)"
                                     class="text-primary duration-200 hover:primary-dark"
                                     ><i

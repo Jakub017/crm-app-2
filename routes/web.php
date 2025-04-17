@@ -39,16 +39,19 @@ Route::middleware('auth:sanctum', config('jetstream.auth_session'), 'verified',)
         Route::post('/klienci/szukaj', 'search')->name('client.search');
     });
 
-    Route::controller(TaskController::class)->group(function() {
+    Route::controller(TaskController::class)->group(function () {
         Route::get('/zadania', 'index')->name('task.index');
         Route::get('/zadania/dodaj', 'create')->name('task.create');
         Route::post('/zadania', 'store')->name('task.store');
+
+        Route::match(['get', 'post'], '/zadania/szukaj', 'search')->name('task.search');
+
         Route::get('/zadania/{task}', 'show')->name('task.show');
         Route::get('/zadania/{task}/edytuj', 'edit')->name('task.edit');
         Route::put('/zadania/{task}', 'update')->name('task.update');
-        Route::put('/zadania/{task}', 'check')->name('task.check');
+        Route::put('/zadania/{task}/wykonaj', 'check')->name('task.check');
+        Route::patch('/zadania/{task}/cofnij', 'uncheck')->name('task.uncheck');
         Route::delete('/zadania/{task}', 'destroy')->name('task.destroy');
-        Route::post('/zadania/szukaj', 'search')->name('task.search');
     });
 
     Route::controller(InvoiceController::class)->group(function() {
