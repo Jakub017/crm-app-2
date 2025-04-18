@@ -31,8 +31,8 @@
                 class="form-input pl-8"
                 type="text"
                 id="search"
-                placeholder="Szukaj..."
-                v-model="form.query"
+                placeholder="Szukaj wg. nazwy firmy"
+                v-model="form.name"
             />
         </form>
     </div>
@@ -56,7 +56,7 @@
                                         scope="col"
                                         class="hidden px-3 py-3.5 text-left text-sm font-semibold text-secondary md:table-cell"
                                     >
-                                        Osoba kontaktowa
+                                        NIP
                                     </th>
                                     <th
                                         scope="col"
@@ -68,7 +68,7 @@
                                         scope="col"
                                         class="hidden px-3 py-3.5 text-left text-sm font-semibold text-secondary lg:table-cell"
                                     >
-                                        Kraj
+                                        Numer telefonu
                                     </th>
                                     <th
                                         scope="col"
@@ -80,33 +80,25 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
-                                <tr
-                                    v-for="client in clients"
-                                    :key="client.id"
-                                    class="even:bg-gray-50"
-                                >
+                                <tr v-for="client in clients" :key="client.id">
                                     <td
                                         class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-secondary-dark sm:w-auto sm:max-w-none sm:pl-4"
                                     >
                                         <div
                                             class="flex flex-col gap-3 md:gap-1"
                                         >
-                                            {{ client.company }}
-                                            <span
-                                                class="hidden text-xs text-secondary font-medium md:inline"
-                                                >{{ client.type }}</span
-                                            >
+                                            {{ client.name }}
 
                                             <div
                                                 class="flex flex-col gap-1 md:hidden"
                                             >
                                                 <span
                                                     class="text-xs text-secondary"
-                                                    >Osoba kontaktowa</span
+                                                    >NIP</span
                                                 >
                                                 <span
                                                     class="text-sm font-medium text-secondary-dark md:hidden"
-                                                    >{{ client.person }}</span
+                                                    >{{ client.tax_no }}</span
                                                 >
                                             </div>
                                             <div
@@ -126,11 +118,11 @@
                                             >
                                                 <span
                                                     class="text-xs text-secondary"
-                                                    >Kraj</span
+                                                    >Numer telefonu</span
                                                 >
                                                 <span
                                                     class="text-sm truncate font-medium text-secondary-dark md:hidden"
-                                                    >{{ client.country }}</span
+                                                    >{{ client.phone }}</span
                                                 >
                                             </div>
                                         </div>
@@ -138,7 +130,7 @@
                                     <td
                                         class="hidden px-3 py-4 text-sm font-medium text-secondary-dark md:table-cell"
                                     >
-                                        {{ client.person }}
+                                        {{ client.tax_no }}
                                     </td>
                                     <td
                                         class="hidden px-3 py-4 text-sm font-medium text-secondary-dark md:table-cell"
@@ -148,7 +140,7 @@
                                     <td
                                         class="hidden px-3 py-4 text-sm font-medium text-secondary-dark lg:table-cell"
                                     >
-                                        {{ client.country }}
+                                        {{ client.phone }}
                                     </td>
                                     <td
                                         class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0"
@@ -215,10 +207,10 @@ const props = defineProps({
 });
 
 const form = useForm({
-    query: "",
+    name: "",
 });
 
-const search = () => form.post(route("client.search", { query: form.query }));
+const search = () => form.post(route("client.search"));
 </script>
 
 <script>

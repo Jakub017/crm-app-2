@@ -2,10 +2,10 @@
     <TopText>
         <template v-slot:title>
             Informacje o kliencie
-            <span class="font-bold text-indigo-600">{{ client.company }}</span>
+            <span class="font-bold text-primary">{{ client.name }}</span>
         </template>
         <template v-slot:description>
-            Zapisane informacje na temat twojego klienta.
+            Sprawdź informacje na temat twojego klienta.
         </template>
     </TopText>
     <div class="bg-white rounded-lg p-4">
@@ -16,12 +16,12 @@
                 </h3>
             </div>
             <div class="col-span-4">
-                <label for="company" class="form-label">Nazwa firmy</label>
+                <label for="nip" class="form-label">Nazwa firmy</label>
                 <input
-                    id="company"
+                    id="nip"
                     class="form-input bg-gray-50"
                     type="text"
-                    v-model="props.client.company"
+                    v-model="props.client.name"
                     disabled
                 />
             </div>
@@ -31,32 +31,21 @@
                     id="nip"
                     class="form-input bg-gray-50"
                     type="text"
-                    v-model="props.client.company"
+                    v-model="props.client.tax_no"
                     disabled
                 />
             </div>
             <div class="col-span-4">
-                <label for="type" class="form-label">Rodzaj działalności</label>
+                <label for="type" class="form-label">Numer REGON</label>
                 <input
                     id="type"
                     class="form-input bg-gray-50"
                     type="text"
-                    v-model="props.client.type"
+                    v-model="props.client.register_number"
                     disabled
                 />
             </div>
-
-            <div class="col-span-3">
-                <label for="country" class="form-label">Kraj</label>
-                <input
-                    id="country"
-                    class="form-input bg-gray-50"
-                    type="text"
-                    v-model="props.client.country"
-                    disabled
-                />
-            </div>
-            <div class="col-span-3">
+            <div class="col-span-12 md:col-span-4">
                 <label for="street" class="form-label">Ulica</label>
                 <input
                     id="street"
@@ -66,7 +55,7 @@
                     disabled
                 />
             </div>
-            <div class="col-span-3">
+            <div class="col-span-12 md:col-span-4">
                 <label for="city" class="form-label">Miasto</label>
                 <input
                     id="city"
@@ -76,13 +65,37 @@
                     disabled
                 />
             </div>
-            <div class="col-span-3">
-                <label for="zip_code" class="form-label">Kod pocztowy</label>
+            <div class="col-span-12 md:col-span-4">
+                <label for="post_code" class="form-label">Kod pocztowy</label>
                 <input
-                    id="zip_code"
+                    id="post_code"
                     class="form-input bg-gray-50"
                     type="text"
-                    v-model="props.client.zip_code"
+                    v-model="props.client.post_code"
+                    disabled
+                />
+            </div>
+
+            <div class="col-span-12 md:col-span-6">
+                <label for="bank" class="form-label">Nazwa banku</label>
+                <input
+                    id="bank"
+                    class="form-input bg-gray-50"
+                    type="text"
+                    v-model="props.client.bank"
+                    disabled
+                />
+            </div>
+
+            <div class="col-span-12 md:col-span-6">
+                <label for="bank_account" class="form-label"
+                    >Numer konta bankowego</label
+                >
+                <input
+                    id="bank_account"
+                    class="form-input bg-gray-50"
+                    type="text"
+                    v-model="props.client.bank_account"
                     disabled
                 />
             </div>
@@ -91,16 +104,6 @@
                 <h3 class="text-base font-semibold text-gray-900">
                     Dane kontaktowe
                 </h3>
-            </div>
-            <div class="col-span-4">
-                <label for="person" class="form-label">Osoba kontaktowa</label>
-                <input
-                    id="person"
-                    class="form-input bg-gray-50"
-                    type="text"
-                    v-model="props.client.person"
-                    disabled
-                />
             </div>
             <div class="col-span-4">
                 <label for="email" class="form-label">Adres email</label>
@@ -119,6 +122,16 @@
                     class="form-input bg-gray-50"
                     type="text"
                     v-model="props.client.phone"
+                    disabled
+                />
+            </div>
+            <div class="col-span-4">
+                <label for="www" class="form-label">Strona internetowa</label>
+                <input
+                    id="www"
+                    class="form-input bg-gray-50"
+                    type="text"
+                    v-model="props.client.www"
                     disabled
                 />
             </div>

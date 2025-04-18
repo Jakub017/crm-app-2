@@ -6,6 +6,8 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\FakturowniaController;
+use App\Http\Controllers\IntegrationController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -28,14 +30,24 @@ Route::middleware([
 
 
 Route::middleware('auth:sanctum', config('jetstream.auth_session'), 'verified',)->group(function () {
+
+    Route::controller(IntegrationController::class)->group(function() {
+         Route::get('/integracja', 'index')->name('integration.index');
+    });
+
+    Route::controller(FakturowniaController::class)->group(function() {
+        Route::get('/integracja/fakturownia', 'create')->name('fakturownia.create');
+        Route::post('/integracja/fakturownia/zapisz', 'store')->name('fakturownia.store');
+    });
+
     Route::controller(ClientController::class)->group(function() {
         Route::get('/klienci', 'index')->name('client.index');
         Route::get('/klienci/dodaj', 'create')->name('client.create');
         Route::post('/klienci', 'store')->name('client.store');
-        Route::get('/klienci/{client}', 'show')->name('client.show');
-        Route::get('/klienci/{client}/edytuj', 'edit')->name('client.edit');
-        Route::put('/klienci/{client}', 'update')->name('client.update');
-        Route::delete('/klienci/{client}', 'destroy')->name('client.destroy');
+        Route::get('/klienci/{id}', 'show')->name('client.show');
+        Route::get('/klienci/{id}/edytuj', 'edit')->name('client.edit');
+        Route::put('/klienci/{id}', 'update')->name('client.update');
+        Route::delete('/klienci/{id}', 'destroy')->name('client.destroy');
         Route::post('/klienci/szukaj', 'search')->name('client.search');
     });
 
@@ -43,9 +55,7 @@ Route::middleware('auth:sanctum', config('jetstream.auth_session'), 'verified',)
         Route::get('/zadania', 'index')->name('task.index');
         Route::get('/zadania/dodaj', 'create')->name('task.create');
         Route::post('/zadania', 'store')->name('task.store');
-
         Route::match(['get', 'post'], '/zadania/szukaj', 'search')->name('task.search');
-
         Route::get('/zadania/{task}', 'show')->name('task.show');
         Route::get('/zadania/{task}/edytuj', 'edit')->name('task.edit');
         Route::put('/zadania/{task}', 'update')->name('task.update');

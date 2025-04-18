@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->string('fakturownia_api_key')->nullable();
+            $table->string('fakturownia_login')->nullable();
         });
     }
 

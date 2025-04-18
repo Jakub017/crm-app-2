@@ -1,24 +1,18 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import AuthenticationCard from '@/Components/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
-import Checkbox from '@/Components/Checkbox.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButtonArchive.vue';
-import TextInput from '@/Components/TextInput.vue';
+import { Head, Link, useForm } from "@inertiajs/vue3";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const form = useForm({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
+    name: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
     terms: false,
 });
 
 const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
+    form.post(route("register"), {
+        onFinish: () => form.reset("password", "password_confirmation"),
     });
 };
 </script>
@@ -26,87 +20,121 @@ const submit = () => {
 <template>
     <Head title="Register" />
 
-    <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo />
-        </template>
+    <div class="font-sans flex h-screen p-4">
+        <div class="hidden md:flex h-full w-1/2">
+            <div class="h-full w-full rounded-md bg-primary-light"></div>
+        </div>
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="name" value="Name" />
-                <TextInput
-                    id="name"
-                    v-model="form.name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
-                <InputError class="mt-2" :message="form.errors.name" />
-            </div>
+        <div
+            class="flex justify-center flex-col items-center w-full md:w-1/2 gap-4"
+        >
+            <form
+                @submit.prevent="submit"
+                class="grid grid-cols-12 gap-8 w-full max-w-[600px] p-4"
+            >
+                <div class="col-span-12 flex flex-col gap-2">
+                    <h1 class="text-xl font-semibold">Zarejestruj się</h1>
+                    <p class="text-sm text-secondary-dark font-normal w-full">
+                        Załóż konto, aby wystawiać faktury, zarządzać zadaniami
+                        i klientami w jednym miejscu.
+                    </p>
+                </div>
 
-            <div class="mt-4">
-                <InputLabel for="email" value="Email" />
-                <TextInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="username"
-                />
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-                <TextInput
-                    id="password"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="new-password"
-                />
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
-                <TextInput
-                    id="password_confirmation"
-                    v-model="form.password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="new-password"
-                />
-                <InputError class="mt-2" :message="form.errors.password_confirmation" />
-            </div>
-
-            <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
-                <InputLabel for="terms">
-                    <div class="flex items-center">
-                        <Checkbox id="terms" v-model:checked="form.terms" name="terms" required />
-
-                        <div class="ms-2">
-                            I agree to the <a target="_blank" :href="route('terms.show')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Terms of Service</a> and <a target="_blank" :href="route('policy.show')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Privacy Policy</a>
+                <div class="gap-4 grid grid-cols-12 col-span-12">
+                    <div class="flex flex-col gap-1 col-span-12">
+                        <label class="form-label" for="name"
+                            >Imię i nazwisko</label
+                        >
+                        <div class="relative w-full">
+                            <input
+                                class="form-input pl-8"
+                                id="name"
+                                type="text"
+                                v-model="form.name"
+                            /><i
+                                class="fa-solid fa-user text-primary absolute top-1/2 left-3 translate-y-[-50%]"
+                            ></i>
                         </div>
+                        <span class="form-error" v-if="form.errors.name">{{
+                            form.errors.name
+                        }}</span>
                     </div>
-                    <InputError class="mt-2" :message="form.errors.terms" />
-                </InputLabel>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <Link :href="route('login')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Already registered?
-                </Link>
-
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Register
-                </PrimaryButton>
-            </div>
-        </form>
-    </AuthenticationCard>
+                    <div class="flex flex-col gap-1 col-span-12">
+                        <label class="form-label" for="email"
+                            >Adres email</label
+                        >
+                        <div class="relative w-full">
+                            <input
+                                class="form-input pl-8"
+                                id="email"
+                                type="email"
+                                v-model="form.email"
+                            />
+                            <i
+                                class="fa-solid fa-at text-primary absolute top-1/2 left-3 translate-y-[-50%]"
+                            ></i>
+                        </div>
+                        <span class="form-error" v-if="form.errors.email">{{
+                            form.errors.email
+                        }}</span>
+                    </div>
+                    <div class="flex flex-col gap-1 col-span-12 md:col-span-6">
+                        <label class="form-label" for="password">Hasło</label>
+                        <div class="relative w-full">
+                            <input
+                                class="form-input pl-8"
+                                id="password"
+                                type="password"
+                                v-model="form.password"
+                            />
+                            <i
+                                class="fa-solid fa-lock text-primary absolute top-1/2 left-3 translate-y-[-50%]"
+                            ></i>
+                        </div>
+                        <span class="form-error" v-if="form.errors.password">{{
+                            form.errors.password
+                        }}</span>
+                    </div>
+                    <div class="flex flex-col gap-1 col-span-12 md:col-span-6">
+                        <label class="form-label" for="password_confirmation"
+                            >Powtórz hasło</label
+                        >
+                        <div class="relative w-full">
+                            <input
+                                class="form-input pl-8"
+                                id="password_confirmation"
+                                type="password"
+                                v-model="form.password_confirmation"
+                            />
+                            <i
+                                class="fa-solid fa-lock text-primary absolute top-1/2 left-3 translate-y-[-50%]"
+                            ></i>
+                        </div>
+                        <span
+                            class="form-error"
+                            v-if="form.errors.password_confirmation"
+                            >{{ form.errors.password_confirmation }}</span
+                        >
+                    </div>
+                    <div class="col-span-12">
+                        <PrimaryButton
+                            class="flex w-full text-center justify-center"
+                            :type="'button'"
+                            >Zarejestuj się</PrimaryButton
+                        >
+                    </div>
+                    <p
+                        class="text-sm text-secondary-dark font-normal col-span-12"
+                    >
+                        Masz juz konto?
+                        <Link
+                            :href="route('login')"
+                            class="text-primary font-semibold"
+                            >Zaloguj się</Link
+                        >
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
 </template>

@@ -31,6 +31,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'fakturownia_api_key',
+        'fakturownia_login',
     ];
 
     /**

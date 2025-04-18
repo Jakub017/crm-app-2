@@ -2,7 +2,7 @@
     <TopText>
         <template v-slot:title>
             Edycja klienta
-            <span class="font-bold text-indigo-600">{{ client.company }}</span>
+            <span class="font-bold text-primary">{{ client.name }}</span>
         </template>
         <template v-slot:description>
             Edytuj informacje na temat zapisanego klienta.
@@ -16,58 +16,48 @@
                         Dane firmy
                     </h3>
                 </div>
-                <div class="col-span-4">
-                    <label for="company" class="form-label">Nazwa firmy</label>
+                <div class="col-span-12 md:col-span-4">
+                    <label for="name" class="form-label">Nazwa firmy *</label>
                     <input
-                        id="company"
+                        id="name"
                         class="form-input"
                         type="text"
-                        v-model="form.company"
+                        v-model="form.name"
                     />
-                    <span class="form-error" v-if="form.errors.company">{{
-                        form.errors.company
+                    <span class="form-error" v-if="form.errors.name">{{
+                        form.errors.name
                     }}</span>
                 </div>
-                <div class="col-span-4">
-                    <label for="nip" class="form-label">NIP</label>
+                <div class="col-span-12 md:col-span-4">
+                    <label for="tax_no" class="form-label">NIP</label>
                     <input
-                        id="nip"
+                        id="tax_no"
                         class="form-input"
                         type="text"
-                        v-model="form.nip"
+                        v-model="form.tax_no"
                     />
-                    <span class="form-error" v-if="form.errors.nip">{{
-                        form.errors.nip
+                    <span class="form-error" v-if="form.errors.tax_no">{{
+                        form.errors.tax_no
                     }}</span>
                 </div>
-                <div class="col-span-4">
-                    <label for="type" class="form-label"
-                        >Rodzaj działalności</label
+                <div class="col-span-12 md:col-span-4">
+                    <label for="register_number" class="form-label"
+                        >Numer REGON</label
                     >
                     <input
-                        id="type"
+                        id="register_number"
                         class="form-input"
                         type="text"
-                        v-model="form.type"
+                        v-model="form.register_number"
                     />
-                    <span class="form-error" v-if="form.errors.type">{{
-                        form.errors.type
-                    }}</span>
+                    <span
+                        class="form-error"
+                        v-if="form.errors.register_number"
+                        >{{ form.errors.register_number }}</span
+                    >
                 </div>
 
-                <div class="col-span-3">
-                    <label for="country" class="form-label">Kraj</label>
-                    <input
-                        id="country"
-                        class="form-input"
-                        type="text"
-                        v-model="form.country"
-                    />
-                    <span class="form-error" v-if="form.errors.country">{{
-                        form.errors.country
-                    }}</span>
-                </div>
-                <div class="col-span-3">
+                <div class="col-span-12 md:col-span-4">
                     <label for="street" class="form-label">Ulica</label>
                     <input
                         id="street"
@@ -79,7 +69,7 @@
                         form.errors.street
                     }}</span>
                 </div>
-                <div class="col-span-3">
+                <div class="col-span-12 md:col-span-4">
                     <label for="city" class="form-label">Miasto</label>
                     <input
                         id="city"
@@ -91,18 +81,46 @@
                         form.errors.city
                     }}</span>
                 </div>
-                <div class="col-span-3">
-                    <label for="zip_code" class="form-label"
+                <div class="col-span-12 md:col-span-4">
+                    <label for="post_code" class="form-label"
                         >Kod pocztowy</label
                     >
                     <input
-                        id="zip_code"
+                        id="post_code"
                         class="form-input"
                         type="text"
-                        v-model="form.zip_code"
+                        v-model="form.post_code"
                     />
-                    <span class="form-error" v-if="form.errors.zip_code">{{
-                        form.errors.zip_code
+                    <span class="form-error" v-if="form.errors.post_code">{{
+                        form.errors.post_code
+                    }}</span>
+                </div>
+
+                <div class="col-span-12 md:col-span-6">
+                    <label for="bank" class="form-label">Nazwa banku</label>
+                    <input
+                        id="bank"
+                        class="form-input"
+                        type="text"
+                        v-model="form.bank"
+                    />
+                    <span class="form-error" v-if="form.errors.bank">{{
+                        form.errors.bank
+                    }}</span>
+                </div>
+
+                <div class="col-span-12 md:col-span-6">
+                    <label for="bank_account" class="form-label"
+                        >Numer konta bankowego</label
+                    >
+                    <input
+                        id="bank_account"
+                        class="form-input"
+                        type="text"
+                        v-model="form.bank_account"
+                    />
+                    <span class="form-error" v-if="form.errors.bank_account">{{
+                        form.errors.bank_account
                     }}</span>
                 </div>
 
@@ -111,21 +129,8 @@
                         Dane kontaktowe
                     </h3>
                 </div>
-                <div class="col-span-4">
-                    <label for="person" class="form-label"
-                        >Osoba kontaktowa</label
-                    >
-                    <input
-                        id="person"
-                        class="form-input"
-                        type="text"
-                        v-model="form.person"
-                    />
-                    <span class="form-error" v-if="form.errors.person">{{
-                        form.errors.person
-                    }}</span>
-                </div>
-                <div class="col-span-4">
+
+                <div class="col-span-12 md:col-span-4">
                     <label for="email" class="form-label">Adres email</label>
                     <input
                         id="email"
@@ -137,7 +142,7 @@
                         form.errors.email
                     }}</span>
                 </div>
-                <div class="col-span-4">
+                <div class="col-span-12 md:col-span-4">
                     <label for="phone" class="form-label">Numer telefonu</label>
                     <input
                         id="phone"
@@ -147,6 +152,20 @@
                     />
                     <span class="form-error" v-if="form.errors.phone">{{
                         form.errors.phone
+                    }}</span>
+                </div>
+                <div class="col-span-12 md:col-span-4">
+                    <label for="www" class="form-label"
+                        >Strona internetowa</label
+                    >
+                    <input
+                        id="www"
+                        class="form-input"
+                        type="text"
+                        v-model="form.www"
+                    />
+                    <span class="form-error" v-if="form.errors.www">{{
+                        form.errors.www
                     }}</span>
                 </div>
 
@@ -181,16 +200,17 @@ const props = defineProps({
 });
 
 const form = useForm({
-    company: props.client.company,
-    nip: props.client.nip,
-    type: props.client.type,
-    country: props.client.country,
+    name: props.client.name,
+    tax_no: props.client.tax_no,
+    register_number: props.client.register_number,
     street: props.client.street,
     city: props.client.city,
-    zip_code: props.client.zip_code,
-    person: props.client.person,
+    post_code: props.client.post_code,
+    bank: props.client.bank,
+    bank_account: props.client.bank_account,
     email: props.client.email,
     phone: props.client.phone,
+    www: props.client.www,
     note: props.client.note,
 });
 

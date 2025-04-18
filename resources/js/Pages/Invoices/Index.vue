@@ -88,6 +88,7 @@
                                         class="hidden px-3 py-4 text-sm font-medium text-secondary-dark md:table-cell"
                                     >
                                         {{ invoice.price_gross }}
+                                        {{ invoice.currency }}
                                     </td>
                                     <td
                                         v-if="invoice.status === 'issued'"

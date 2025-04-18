@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Crypt;
 
 class ClientController extends Controller
 {
@@ -14,16 +16,30 @@ class ClientController extends Controller
     public function index()
     {
         $user = Auth::user();
-       
+        $api_token = Crypt::decryptString($user->fakturownia_api_key);
+        $login = Crypt::decryptString($user->fakturownia_login);
+
+        $clients = Http::get('https://'. $login .'.fakturownia.pl/clients.json', [
+            'api_token' => $api_token,
+        ])->json();
+
+
         return Inertia('Clients/Index', [
             'clients' => $clients,
         ]);
     }
 
-    public function search(Request $request) {
+    public function search(Request $request)
+    {
         $user = Auth::user();
-        $clients = Client::search($request->input('query'))->where('user_id', $user->id)->get();
-        $search = $request->input('search');
+        $api_token = Crypt::decryptString($user->fakturownia_api_key);
+        $login = Crypt::decryptString($user->fakturownia_login);
+
+        $clients = Http::get('https://'. $login .'.fakturownia.pl/clients.json', [
+            'api_token' => $api_token,
+            'name' => $request->name,
+        ])->json();
+
         return Inertia('Clients/Index', [
             'clients' => $clients,
         ]);
@@ -43,29 +59,45 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $data = $request->validate([
-            'company' => 'required|string',
-            'nip' => 'required|string|max:13',
-            'type' => 'required|string',
-            'country' => 'required|string',
-            'street' => 'required|string',
-            'city' => 'required|string',
-            'zip_code' => 'required|string',
-            'person' => 'nullable|string',
-            'email' => 'required|email',
-            'phone' => 'nullable|string',
-            'note' => 'nullable|string',
+        $api_token = Crypt::decryptString($user->fakturownia_api_key);
+        $login = Crypt::decryptString($user->fakturownia_login);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'tax_no' => 'nullable|string|max:20',
+            'register_number' => 'nullable|string|max:20',
+            'street' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'post_code' => 'nullable|string|max:6|regex:/^\d{2}-\d{3}$/',
+            'bank' => 'nullable|string|max:255',
+            'bank_account' => 'nullable|string|max:50',
+            'email' => 'nullable|email|max:255',
+            'phone' => 'nullable|string|max:255',
+            'www' => 'nullable|string|max:255',
+            'note' => 'nullable|string|max:255',
         ]);
 
-        $user->clients()->create($data);
+        Http::post('https://'. $login .'.fakturownia.pl/clients.json', [
+            'api_token' => $api_token,
+            'client' => $validated,
+        ])->json();
+
         return redirect()->route('client.index')->with('success', 'Klient został dodany.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Client $client)
+    public function show($id)
     {
+        $user = Auth::user();
+        $api_token = Crypt::decryptString($user->fakturownia_api_key);
+        $login = Crypt::decryptString($user->fakturownia_login);
+
+        $client = Http::get('https://'. $login .'.fakturownia.pl/clients/'. $id .'.json', [
+            'api_token' => $api_token,
+        ])->json();
+
         return Inertia('Clients/Show', [
             'client' => $client,
         ]);
@@ -74,8 +106,16 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Client $client)
+    public function edit(Client $client, $id)
     {
+        $user = Auth::user();
+        $api_token = Crypt::decryptString($user->fakturownia_api_key);
+        $login = Crypt::decryptString($user->fakturownia_login);
+
+        $client = Http::get('https://'. $login .'.fakturownia.pl/clients/'. $id .'.json', [
+            'api_token' => $api_token,
+        ])->json();
+
         return Inertia('Clients/Edit', [
             'client' => $client,
         ]);
@@ -84,33 +124,51 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Client $client)
+    public function update(Request $request, $id)
     {
         $user = Auth::user();
-        $data = $request->validate([
-            'company' => 'required|string',
-            'nip' => 'required|string|max:13', // Nip francuski ma 13 cyfr
-            'type' => 'required|string',
-            'country' => 'required|string',
-            'street' => 'required|string',
-            'city' => 'required|string',
-            'zip_code' => 'required|string',
-            'person' => 'string',
-            'email' => 'required|email',
-            'phone' => '',
-            'note' => 'string',
+        $api_token = Crypt::decryptString($user->fakturownia_api_key);
+        $login = Crypt::decryptString($user->fakturownia_login);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'tax_no' => 'nullable|string|max:20',
+            'register_number' => 'nullable|string|max:20',
+            'street' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'post_code' => 'nullable|string|max:6|regex:/^\d{2}-\d{3}$/',
+            'bank' => 'nullable|string|max:255',
+            'bank_account' => 'nullable|string|max:50',
+            'email' => 'nullable|email|max:255',
+            'phone' => 'nullable|string|max:255',
+            'www' => 'nullable|string|max:255',
+            'note' => 'nullable|string|max:255',
         ]);
 
-        $client->update($data);
+        $payload = $validated;
+        $payload['shortcut'] = $validated['name'];
+
+        Http::put('https://'. $login .'.fakturownia.pl/clients/'. $id .'.json', [
+            'api_token' => $api_token,
+            'client' => $payload,
+        ])->json();
+
         return redirect()->route('client.index')->with('success', 'Klient został zaktualizowany.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Client $client)
+    public function destroy($id)
     {
-        $client->delete();
+        $user = Auth::user();
+        $api_token = Crypt::decryptString($user->fakturownia_api_key);
+        $login = Crypt::decryptString($user->fakturownia_login);
+
+        Http::delete('https://'. $login .'.fakturownia.pl/clients/'. $id .'.json', [
+            'api_token' => $api_token,
+        ])->json();
+        
         return redirect()->route('client.index')->with('success', 'Klient został usunięty.');
     }
 }
