@@ -62,6 +62,8 @@ class InvoiceController extends Controller
             'buyer_name' => 'required|max:255',
             'issue_date' => 'required|date',
             'payment_to' => 'required|date',
+            'buyer_email' => 'required|email',
+            'buyer_tax_no' => 'required|numeric',
         ]);
 
         $seller_info = Http::get('https://'. $login .'.fakturownia.pl/departments.json', [
@@ -79,9 +81,6 @@ class InvoiceController extends Controller
             'name' => $validated_invoice['buyer_name'],
         ])->json();
 
-        $invoice['buyer_email'] = $buyer_info[0]['email'];
-        $invoice['buyer_tax_no'] = $buyer_info[0]['tax_no'];
-
         $validated_positions = $request->validate([
             'positions' => 'array|required',
             'positions.*.name' => 'required|max:255',
@@ -97,7 +96,7 @@ class InvoiceController extends Controller
             'invoice' => $invoice,
         ])->json();
 
-        dd($invoice);
+        dd($response);
 
         return redirect()->route('invoice.index')->with('success', 'Faktura wystawiona pomyślnie');
     }

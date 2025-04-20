@@ -6,73 +6,76 @@
                 Lista twoich zadań do wykonania.
             </template>
             <template v-slot:action>
-                <PrimaryButton :type="'Link'" :href="route('task.create')"
-                    >Dodaj zadanie</PrimaryButton
-                >
+                <PrimaryButton
+                    class="flex gap-2 items-center justify-center"
+                    :type="'Link'"
+                    :href="route('task.create')"
+                    >Dodaj zadanie <i class="fa-solid fa-plus"></i
+                ></PrimaryButton>
             </template>
         </TopText>
     </div>
-    <div
-        class="flex flex-col md:flex-row justify-between items-center bg-white rounded-lg px-4 mb-4 p-4 border-[1px] border-secondary-light"
-    >
-        <form @submit.prevent="search" class="w-full md:w-1/4 relative">
-            <button
-                class="text-gray-400 absolute left-2 top-1/2 -translate-y-1/2"
-                type="submit"
-            >
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
 
-            <input
-                class="form-input pl-8"
-                type="text"
-                id="search"
-                placeholder="Szukaj..."
-                v-model="form.query"
-            />
-        </form>
-    </div>
-    <div
-        class="bg-white rounded-lg px-4 border-[1px] border-secondary-light pb-2"
-    >
+    <div class="bg-white rounded-xl border-[1px] border-secondary-light p-4">
+        <div class="grid grid-cols-12 mb-4">
+            <form
+                @submit.prevent="search"
+                class="col-span-12 lg:col-span-3 relative"
+            >
+                <button
+                    class="text-secondary absolute left-4 top-1/2 -translate-y-1/2"
+                    type="submit"
+                >
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+
+                <input
+                    class="form-input px-3 py-3 pl-10 bg-secondary-extra-light border-none text-secondary ring:none focus:ring-0"
+                    type="text"
+                    id="search"
+                    placeholder="Szukaj wg. nazwy zadania"
+                    v-model="form.query"
+                />
+            </form>
+        </div>
         <div class="">
-            <table class="min-w-full divide-y divide-gray-300">
+            <table class="min-w-full">
                 <thead>
                     <tr>
                         <th
                             scope="col"
-                            class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-secondary sm:pl-4"
+                            class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-secondary sm:pl-4 bg-secondary-extra-light rounded-ss-3xl rounded-es-3xl"
                         >
                             Zadanie
                         </th>
                         <th
                             scope="col"
-                            class="hidden px-3 py-3.5 text-left text-sm font-semibold text-secondary md:table-cell"
+                            class="hidden px-3 py-3.5 text-left text-sm font-semibold text-secondary md:table-cell bg-secondary-extra-light"
                         >
                             Data wykonania
                         </th>
                         <th
                             scope="col"
-                            class="hidden px-3 py-3.5 text-left text-sm font-semibold text-secondary md:table-cell"
+                            class="hidden px-3 py-3.5 text-left text-sm font-semibold text-secondary md:table-cell bg-secondary-extra-light"
                         >
                             Klient
                         </th>
                         <th
                             scope="col"
-                            class="hidden px-3 py-3.5 text-left text-sm font-semibold text-secondary sm:table-cell"
+                            class="hidden px-3 py-3.5 text-left text-sm font-semibold text-secondary sm:table-cell bg-secondary-extra-light"
                         >
                             Priorytet
                         </th>
                         <th
                             scope="col"
-                            class="relative py-3.5 pl-3 pr-4 sm:pr-0 text-sm font-semibold text-secondary"
+                            class="relative py-3.5 pl-3 pr-4 sm:pr-0 text-sm font-semibold text-secondary bg-secondary-extra-light rounded-ee-3xl rounded-se-3xl"
                         >
                             Akcje
                             <span class="sr-only">Akcje</span>
                         </th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-200 bg-white">
+                <tbody class="bg-white">
                     <tr v-for="task in tasks" :key="task.id">
                         <td
                             class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-secondary-dark sm:w-auto sm:max-w-none sm:pl-4"
@@ -104,19 +107,19 @@
                                     >
                                     <div
                                         v-if="task.priority === 1"
-                                        class="bg-blue-200 text-blue-600 w-20 text-center py-1 px-2 rounded-md"
+                                        class="bg-blue-200 text-blue-600 w-20 text-center py-1 px-2 rounded-full"
                                     >
                                         Niski
                                     </div>
                                     <div
                                         v-else-if="task.priority === 2"
-                                        class="bg-orange-200 text-orange-600 w-20 text-center py-1 px-2 rounded-md"
+                                        class="bg-orange-200 text-orange-600 w-20 text-center py-1 px-2 rounded-full"
                                     >
                                         Średni
                                     </div>
                                     <div
                                         v-else
-                                        class="bg-red-200 text-red-600 w-20 text-center py-1 px-2 rounded-md"
+                                        class="bg-red-200 text-red-600 w-20 text-center py-1 px-2 rounded-full"
                                     >
                                         Wyoski
                                     </div>
@@ -138,19 +141,19 @@
                         >
                             <div
                                 v-if="task.priority === 1"
-                                class="bg-blue-200 text-blue-600 w-20 text-center py-1 px-2 rounded-md"
+                                class="bg-blue-200 text-blue-600 w-20 text-center py-1 px-2 rounded-full"
                             >
                                 Niski
                             </div>
                             <div
                                 v-else-if="task.priority === 2"
-                                class="bg-orange-200 text-orange-600 w-20 text-center py-1 px-2 rounded-md"
+                                class="bg-orange-200 text-orange-600 w-20 text-center py-1 px-2 rounded-full"
                             >
                                 Średni
                             </div>
                             <div
                                 v-else
-                                class="bg-red-200 text-red-600 w-20 text-center py-1 px-2 rounded-md"
+                                class="bg-red-200 text-red-600 w-20 text-center py-1 px-2 rounded-full"
                             >
                                 Wyoski
                             </div>

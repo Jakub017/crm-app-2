@@ -5,7 +5,7 @@
             Dodaj nowe zadanie i przypisz je do odpowiedniego klienta.
         </template>
     </TopText>
-    <div class="bg-white rounded-lg p-4">
+    <div class="bg-white rounded-lg p-4 border border-secondary-light">
         <form @submit.prevent="store">
             <div class="grid grid-cols-12 gap-4">
                 <div class="col-span-12">
@@ -28,7 +28,7 @@
                 <div class="col-span-12">
                     <label for="description" class="form-label">Opis</label>
                     <textarea
-                        class="form-input resize-none"
+                        class="form-input resize-none !rounded-xl"
                         rows="5"
                         id="description"
                         v-model="form.description"
@@ -90,7 +90,9 @@
                     }}</span>
                 </div>
                 <div class="col-span-12">
-                    <PrimaryButton :type="'button'">Dodaj</PrimaryButton>
+                    <PrimaryButton :type="'button'"
+                        >Dodaj zadanie</PrimaryButton
+                    >
                 </div>
             </div>
         </form>

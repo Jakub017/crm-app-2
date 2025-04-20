@@ -5,7 +5,7 @@
             Wystaw nową fakturę dla swojego klienta.
         </template>
     </TopText>
-    <div class="bg-white rounded-lg p-4">
+    <div class="bg-white rounded-lg p-4 border border-secondary-light">
         <form @submit.prevent="store" class="grid grid-cols-12 gap-4">
             <div class="col-span-12">
                 <h3 class="text-base font-semibold text-gray-900">
@@ -33,6 +33,25 @@
                     form.errors.buyer_name
                 }}</span>
             </div>
+            <div class="col-span-12 md:col-span-6">
+                <label for="buyer_tax_no" class="form-label">NIP</label>
+                <input
+                    id="buyer_tax_no"
+                    class="form-input"
+                    type="text"
+                    v-model="form.buyer_tax_no"
+                />
+            </div>
+            <div class="col-span-12 md:col-span-6">
+                <label for="buyer_email" class="form-label">Adres email</label>
+                <input
+                    id="buyer_email"
+                    class="form-input"
+                    type="text"
+                    v-model="form.buyer_email"
+                />
+            </div>
+
             <div class="col-span-12 mt-4">
                 <h3 class="text-base font-semibold text-gray-900">
                     Dodatkowe informacje
@@ -129,7 +148,6 @@
                         <option value="23">23%</option>
                         <option value="8">8%</option>
                         <option value="5">5%</option>
-                        <option value="0">0%</option>
                     </select>
                 </div>
                 <div class="col-span-12 md:col-span-2">
@@ -144,15 +162,15 @@
                         disabled
                     />
                 </div>
-                <div class="col-span-12 flex gap-4">
+                <div class="col-span-12 flex gap-2">
                     <button
-                        class="bg-green-600 font-semibold text-white text-sm px-4 py-2 rounded-md"
+                        class="bg-green-600 font-semibold text-white text-sm px-4 py-2 duration-300 hover:bg-green-700 rounded-full flex justify-center items-center gap-1"
                         @click.prevent="addPosition()"
                     >
-                        Dodaj pozycję
+                        Nowa pozycja
                     </button>
                     <button
-                        class="bg-red-500 font-semibold text-white text-sm px-4 py-2 rounded-md"
+                        class="bg-red-500 font-semibold text-white text-sm px-4 py-2 duration-300 hover:bg-red-600 rounded-full flex justify-center items-center gap-1"
                         @click.prevent="form.positions.splice(index, 1)"
                     >
                         Usuń pozycję
@@ -171,17 +189,20 @@
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TopText from "@/Components/TopText.vue";
 import { useForm } from "@inertiajs/vue3";
-import { ref, watch, computed } from "vue";
+import { ref, watch } from "vue";
 
 const props = defineProps({
     clients: Array,
     today: Date,
+    clientInfo: Object,
 });
 
 const form = useForm({
     buyer_name: "",
     issue_date: props.today,
     payment_to: "",
+    buyer_email: "",
+    buyer_tax_no: "",
     positions: [
         {
             name: "",
@@ -194,7 +215,8 @@ const form = useForm({
     ],
 });
 
-const tasks = ref();
+const tasks = ref({});
+const clientInfo = ref({});
 
 watch(
     () => form.buyer_name,
@@ -208,6 +230,29 @@ watch(
             }
         } else {
             tasks.value = [];
+        }
+    }
+);
+
+watch(
+    () => form.buyer_name,
+    async (newClient) => {
+        if (newClient) {
+            try {
+                const response = await axios.get(
+                    route("client.get", newClient)
+                );
+                clientInfo.value = response.data;
+                form.buyer_email = clientInfo.value.email;
+                form.buyer_tax_no = clientInfo.value.tax_no;
+            } catch (error) {
+                console.log(
+                    "Wystapil blad podczas pobierania danych klienta:",
+                    error
+                );
+            }
+        } else {
+            clientInfo.value = [];
         }
     }
 );

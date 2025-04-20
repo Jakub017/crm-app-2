@@ -5,7 +5,7 @@
             Dodaj nowego klienta do swojej bazy danych.
         </template>
     </TopText>
-    <div class="bg-white rounded-lg p-4">
+    <div class="bg-white rounded-lg p-4 border border-secondary-light">
         <form @submit.prevent="store">
             <div class="grid grid-cols-12 gap-4">
                 <div class="col-span-12">
@@ -38,19 +38,22 @@
                     }}</span>
                 </div>
                 <div class="col-span-12 md:col-span-4">
-                    <label for="register_number" class="form-label">Numer REGON</label>
+                    <label for="register_number" class="form-label"
+                        >Numer REGON</label
+                    >
                     <input
                         id="register_number"
                         class="form-input"
                         type="text"
                         v-model="form.register_number"
                     />
-                    <span class="form-error" v-if="form.errors.register_number">{{
-                        form.errors.register_number
-                    }}</span>
+                    <span
+                        class="form-error"
+                        v-if="form.errors.register_number"
+                        >{{ form.errors.register_number }}</span
+                    >
                 </div>
 
-                
                 <div class="col-span-12 md:col-span-4">
                     <label for="street" class="form-label">Ulica</label>
                     <input
@@ -75,7 +78,7 @@
                         form.errors.city
                     }}</span>
                 </div>
-                <div class="col-span-12 md:col-span-4 ">
+                <div class="col-span-12 md:col-span-4">
                     <label for="post_code" class="form-label"
                         >Kod pocztowy</label
                     >
@@ -104,7 +107,9 @@
                 </div>
 
                 <div class="col-span-12 md:col-span-6">
-                    <label for="bank_account" class="form-label">Numer konta bankowego</label>
+                    <label for="bank_account" class="form-label"
+                        >Numer konta bankowego</label
+                    >
                     <input
                         id="bank_account"
                         class="form-input"
@@ -121,7 +126,7 @@
                         Dane kontaktowe
                     </h3>
                 </div>
-                
+
                 <div class="col-span-12 md:col-span-4">
                     <label for="email" class="form-label">Adres email</label>
                     <input
@@ -164,7 +169,7 @@
                 <div class="col-span-12">
                     <label for="note" class="form-label">Notatka</label>
                     <textarea
-                        class="form-input resize-none"
+                        class="form-input resize-none !rounded-xl"
                         rows="5"
                         id="note"
                         v-model="form.note"
@@ -175,7 +180,9 @@
                 </div>
 
                 <div class="col-span-12">
-                    <PrimaryButton :type="'button'">Dodaj</PrimaryButton>
+                    <PrimaryButton :type="'button'"
+                        >Dodaj klienta</PrimaryButton
+                    >
                 </div>
             </div>
         </form>

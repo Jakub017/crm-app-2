@@ -49,6 +49,7 @@ Route::middleware('auth:sanctum', config('jetstream.auth_session'), 'verified',)
         Route::put('/klienci/{id}', 'update')->name('client.update');
         Route::delete('/klienci/{id}', 'destroy')->name('client.destroy');
         Route::post('/klienci/szukaj', 'search')->name('client.search');
+        Route::get('/klienci/pobierz-po-id/{name}', 'get')->name('client.get');
     });
 
     Route::controller(TaskController::class)->group(function () {

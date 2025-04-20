@@ -23,9 +23,24 @@ class ClientController extends Controller
             'api_token' => $api_token,
         ])->json();
 
+
         return Inertia('Clients/Index', [
             'clients' => $clients,
         ]);
+    }
+
+    public function get($name) 
+    {
+        $user = Auth::user();
+        $api_token = Crypt::decryptString($user->fakturownia_api_key);
+        $login = Crypt::decryptString($user->fakturownia_login);
+
+        $client_info = Http::get('https://'. $login .'.fakturownia.pl/clients.json', [
+            'api_token' => $api_token,
+            'name' => $name
+        ])->json()[0];
+       
+        return response()->json($client_info);
     }
 
     public function search(Request $request)

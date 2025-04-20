@@ -11,7 +11,7 @@ const props = defineProps({
 <template>
     <Link
         :href="href"
-        class="w-12 h-12 rounded-full flex items-center justify-center font-medium hover:bg-primary-light transition duration-200 ease-in-out text-lg lg:text-sm lg:justify-start lg:w-full lg:h-auto lg:p-3 lg:gap-2 lg:rounded-md"
+        class="w-12 h-12 rounded-full flex items-center justify-center font-medium hover:bg-primary-light transition duration-200 ease-in-out text-lg lg:text-sm lg:justify-start lg:w-full lg:h-auto lg:p-3 lg:gap-2 lg:rounded-full"
         :class="{
             'text-primary bg-primary-light font-semibold': props.active,
             'text-secondary': !props.active,

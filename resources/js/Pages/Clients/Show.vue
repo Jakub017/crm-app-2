@@ -139,7 +139,7 @@
             <div class="col-span-12">
                 <label for="note" class="form-label">Notatka</label>
                 <textarea
-                    class="form-input resize-none bg-gray-50"
+                    class="form-input resize-none bg-gray-50 !rounded-xl"
                     rows="5"
                     id="note"
                     v-model="props.client.note"

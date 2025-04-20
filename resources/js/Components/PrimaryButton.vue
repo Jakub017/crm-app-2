@@ -10,7 +10,7 @@ const props = defineProps({
 <template>
     <button
         v-if="props.type === 'button'"
-        class="text-white text-sm font-semibold px-4 py-2 rounded-lg bg-primary hover:bg-bg-primary-dark transition duration-150 ease-in-out"
+        class="text-white text-sm font-semibold px-4 py-2 rounded-full bg-primary hover:bg-primary-dark transition duration-150 ease-in-out"
         :class="props.class"
     >
         <slot></slot>
@@ -18,7 +18,7 @@ const props = defineProps({
     <Link
         v-if="props.type === 'Link'"
         :href="href"
-        class="text-white text-sm font-semibold px-4 py-2 rounded-lg bg-primary hover:bg-primary-dark transition duration-150 ease-in-out"
+        class="text-white text-sm font-semibold px-4 py-2 rounded-full bg-primary hover:bg-primary-dark transition duration-150 ease-in-out"
         :class="props.class"
         ><slot></slot
     ></Link>

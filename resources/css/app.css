@@ -11,7 +11,7 @@
 }
 
 .form-input {
-    @apply block w-full rounded-md border-[1px] border-secondary-light focus:border-primary focus:ring-primary text-sm;
+    @apply rounded-full block w-full border-[1px] border-secondary-light focus:border-primary focus:ring-primary text-sm;
 }
 
 .form-label {

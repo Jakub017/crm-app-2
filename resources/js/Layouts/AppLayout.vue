@@ -42,7 +42,7 @@ const logout = () => {
     <div class="flex w-full max-w-full h-screen overflow-hidden">
         <!-- Sidebar -->
         <div
-            class="flex flex-col justify-center items-center gap-8 p-4 bg-white w-24 lg:w-[250px]"
+            class="flex flex-col justify-center items-center gap-8 p-4 border border-secondary-light w-24 lg:w-[250px]"
         >
             <Link :href="route('dashboard')">
                 <ApplicationMark class="block size-12" />
@@ -107,10 +107,12 @@ const logout = () => {
             class="flex min-h-full flex-col w-[calc(100%-64px)] lg:w-[calc(100%-250px)]"
         >
             <!-- Nav -->
-            <nav class="py-2 px-4 bg-white w-full">
+            <nav
+                class="py-2 px-4 bg-white w-full border-b border-secondary-light"
+            >
                 <div class="flex justify-end items-center">
                     <button
-                        class="flex justify-end items-center gap-3 p-2 rounded-md hover:bg-secondary-extra-light transition duration-200 ease-in-out"
+                        class="flex justify-end items-center gap-3 p-2 rounded-full hover:bg-secondary-extra-light transition duration-200 ease-in-out"
                     >
                         <span
                             class="text-sm text-secondary-dark font-semibold"
@@ -118,14 +120,12 @@ const logout = () => {
                         >
                         <img
                             :src="user.profile_photo_url"
-                            class="size-8 rounded-md"
+                            class="size-8 rounded-full"
                         />
                     </button>
                 </div>
             </nav>
-            <main
-                class="p-6 bg-[#F6F6F6] w-full h-full overflow-y-auto rounded-ss-xl"
-            >
+            <main class="p-6 bg-white w-full h-full overflow-y-auto">
                 <slot></slot>
             </main>
         </div>
