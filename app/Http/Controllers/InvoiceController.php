@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -33,9 +34,18 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        $tasks = Auth::user()->tasks()->where('status', 1)->with('client')->get();
+        $user = Auth::user();
+        $api_token = Crypt::decryptString($user->fakturownia_api_key);
+        $login = Crypt::decryptString($user->fakturownia_login);
+        $today = Carbon::now();
+
+        $clients = Http::get('https://'. $login .'.fakturownia.pl/clients.json', [
+            'api_token' => $api_token,
+        ])->json();
+
         return Inertia('Invoices/Create', [
-            'tasks' => $tasks,
+            'clients' => $clients,
+            'today' => $today,
         ]);
     }
 
@@ -44,7 +54,52 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        $api_token = Crypt::decryptString($user->fakturownia_api_key);
+        $login = Crypt::decryptString($user->fakturownia_login);
+
+        $validated_invoice = $request->validate([
+            'buyer_name' => 'required|max:255',
+            'issue_date' => 'required|date',
+            'payment_to' => 'required|date',
+        ]);
+
+        $seller_info = Http::get('https://'. $login .'.fakturownia.pl/departments.json', [
+            'api_token' => $api_token,
+        ])->json();
+
+        $invoice = $validated_invoice;
+        $invoice['seller_name'] = $seller_info[0]['name'];
+        $invoice['seller_tax_no'] = $seller_info[0]['tax_no'];
+        $invoice['kind'] = "vat";
+        $invoice['sell_date'] = $validated_invoice['issue_date'];
+
+        $buyer_info = Http::get('https://'. $login .'.fakturownia.pl/clients.json', [
+            'api_token' => $api_token,
+            'name' => $validated_invoice['buyer_name'],
+        ])->json();
+
+        $invoice['buyer_email'] = $buyer_info[0]['email'];
+        $invoice['buyer_tax_no'] = $buyer_info[0]['tax_no'];
+
+        $validated_positions = $request->validate([
+            'positions' => 'array|required',
+            'positions.*.name' => 'required|max:255',
+            'positions.*.quantity' => 'required|numeric',
+            'positions.*.tax' => 'required|numeric',
+            'positions.*.total_price_gross' => 'required|numeric',
+        ]);
+
+        $invoice['positions'] = $validated_positions['positions'];
+
+        $response = Http::post('https://'. $login .'.fakturownia.pl/invoices.json', [
+            'api_token' => $api_token,
+            'invoice' => $invoice,
+        ])->json();
+
+        dd($invoice);
+
+        return redirect()->route('invoice.index')->with('success', 'Faktura wystawiona pomyślnie');
     }
 
     /**

@@ -61,6 +61,7 @@ Route::middleware('auth:sanctum', config('jetstream.auth_session'), 'verified',)
         Route::put('/zadania/{task}', 'update')->name('task.update');
         Route::put('/zadania/{task}/wykonaj', 'check')->name('task.check');
         Route::patch('/zadania/{task}/cofnij', 'uncheck')->name('task.uncheck');
+        Route::get('/zadania/pobierz-dla-klienta/{name}', 'get')->name('task.get');
         Route::delete('/zadania/{task}', 'destroy')->name('task.destroy');
     });
 

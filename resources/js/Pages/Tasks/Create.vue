@@ -38,10 +38,10 @@
                     }}</span>
                 </div>
                 <div class="col-span-12 md:col-span-4">
-                    <label for="client_id" class="form-label">Klient</label>
+                    <label for="client" class="form-label">Klient</label>
                     <select
-                        id="client_id"
-                        v-model="form.client_id"
+                        id="client"
+                        v-model="form.client"
                         class="form-input"
                         type="text"
                     >
@@ -49,13 +49,13 @@
                         <option
                             v-for="client in clients"
                             :key="client.id"
-                            :value="client.id"
+                            :value="client.name"
                         >
-                            {{ client.company }}
+                            {{ client.name }}
                         </option>
                     </select>
-                    <span class="form-error" v-if="form.errors.client_id">{{
-                        form.errors.client_id
+                    <span class="form-error" v-if="form.errors.client">{{
+                        form.errors.client
                     }}</span>
                 </div>
                 <div class="col-span-12 md:col-span-4">
@@ -109,7 +109,7 @@ defineProps({
 const form = useForm({
     name: "",
     description: "",
-    client_id: "",
+    client: "",
     priority: "",
     due_date: "",
 });

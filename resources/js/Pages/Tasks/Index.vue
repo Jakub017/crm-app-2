@@ -31,38 +31,6 @@
                 v-model="form.query"
             />
         </form>
-        <div
-            class="w-full md:w-1/2 ml-auto mr-0 flex flex-col md:flex-row justify-end items-center gap-2"
-        >
-            <button
-                @click="
-                    form.status = 0;
-                    search();
-                "
-                class="text-sm font-semibold px-4 py-2 rounded-md"
-                :class="
-                    form.status === 0
-                        ? 'text-primary bg-primary-light'
-                        : 'text-secondary'
-                "
-            >
-                Do zrobienia
-            </button>
-            <button
-                @click="
-                    form.status = 1;
-                    search();
-                "
-                class="text-sm font-semibold px-4 py-2 rounded-md"
-                :class="
-                    form.status === 1
-                        ? 'text-primary bg-primary-light'
-                        : 'text-secondary'
-                "
-            >
-                Wykonane
-            </button>
-        </div>
     </div>
     <div
         class="bg-white rounded-lg px-4 border-[1px] border-secondary-light pb-2"
@@ -105,11 +73,7 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
-                    <tr
-                        v-for="task in tasks"
-                        :key="task.id"
-                        class="even:bg-gray-50"
-                    >
+                    <tr v-for="task in tasks" :key="task.id">
                         <td
                             class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-secondary-dark sm:w-auto sm:max-w-none sm:pl-4"
                         >
@@ -131,7 +95,7 @@
                                     >
                                     <span
                                         class="text-sm font-medium text-secondary-dark md:hidden"
-                                        >{{ task.client.company }}</span
+                                        >{{ task.client }}</span
                                     >
                                 </div>
                                 <div class="flex flex-col gap-1 sm:hidden">
@@ -167,7 +131,7 @@
                         <td
                             class="hidden px-3 py-4 text-sm font-medium text-secondary-dark md:table-cell"
                         >
-                            {{ task.client.company }}
+                            {{ task.client }}
                         </td>
                         <td
                             class="hidden px-3 py-4 text-sm font-medium text-secondary-dark sm:table-cell"

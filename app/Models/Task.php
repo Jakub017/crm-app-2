@@ -10,7 +10,7 @@ class Task extends Model
 {
     use Searchable;
 
-    protected $fillable = ['name', 'description', 'client_id', 'priority', 'due_date', 'user_id', 'status', 'has_invoice'];
+    protected $fillable = ['name', 'description', 'client', 'priority', 'due_date', 'user_id', 'status', 'has_invoice'];
 
     public function toSearchableArray()
     {

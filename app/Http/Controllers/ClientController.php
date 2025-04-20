@@ -23,7 +23,6 @@ class ClientController extends Controller
             'api_token' => $api_token,
         ])->json();
 
-
         return Inertia('Clients/Index', [
             'clients' => $clients,
         ]);
