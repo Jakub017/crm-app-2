@@ -97,7 +97,18 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        $user = Auth::user();
+        $api_token = Crypt::decryptString($user->fakturownia_api_key);
+        $login = Crypt::decryptString($user->fakturownia_login);
+
+        $clients = Http::get('https://'. $login .'.fakturownia.pl/clients.json', [
+            'api_token' => $api_token,
+        ])->json();
+
+        return Inertia('Tasks/Edit', [
+            'task' => $task,
+            'clients' => $clients,
+        ]);
     }
 
     /**
@@ -105,7 +116,17 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $user = Auth::user();
+        $data = $request->validate([
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+            'client' => 'required',
+            'priority' => 'required|string',
+            'due_date' => 'required|date',
+        ]);
+
+        $task->update($data);
+        return redirect()->route('task.index')->with('success', 'Zadanie zaktualizowane.');
     }
 
     public function check(Request $request, Task $task) {
