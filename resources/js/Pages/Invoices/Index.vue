@@ -80,6 +80,7 @@
                                 <tr
                                     v-for="invoice in invoices"
                                     :key="invoice.id"
+                                    class="border-b border-secondary-light"
                                 >
                                     <td
                                         class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-secondary-dark sm:w-auto sm:max-w-none sm:pl-4"

@@ -110,7 +110,10 @@ const logout = () => {
             <nav
                 class="py-2 px-4 bg-white w-full border-b border-secondary-light"
             >
-                <div class="flex justify-end items-center">
+                <a
+                    :href="route('profile.show')"
+                    class="flex justify-end items-center"
+                >
                     <button
                         class="flex justify-end items-center gap-3 p-2 rounded-full hover:bg-secondary-extra-light transition duration-200 ease-in-out"
                     >
@@ -123,7 +126,7 @@ const logout = () => {
                             class="size-8 rounded-full"
                         />
                     </button>
-                </div>
+                </a>
             </nav>
             <main class="p-6 bg-white w-full h-full overflow-y-auto">
                 <slot></slot>

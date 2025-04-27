@@ -21,6 +21,7 @@
         "vue": "^3.3.13"
     },
     "dependencies": {
+        "chart.js": "^4.4.9",
         "date-fns": "^4.1.0"
     }
 }
